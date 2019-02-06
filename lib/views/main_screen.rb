@@ -12,7 +12,8 @@ class MainScreen < Gosu::Window
     super WIDTH, HEIGHT
     self.caption = 'Socia'
     @sidebar = Sidebar.new
-    @map     = Map.new
+    @heights = Terrain::SlateGenerator.new(TILE_COUNT * 2, TILE_COUNT * 2).call
+    @map     = Map.new(@heights)
     @cursor = Cursor.new
   end
 
@@ -50,9 +51,8 @@ class MainScreen < Gosu::Window
     x_pos, y_pos = @cursor.position.relative_position
     {
       x_pos: x_pos,
-      y_pos: y_pos
+      y_pos: y_pos,
+      altitude: @heights[x_pos][y_pos]
     }
   end
 end
-
-MainScreen.new.show

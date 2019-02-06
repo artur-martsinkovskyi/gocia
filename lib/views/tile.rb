@@ -1,14 +1,17 @@
 require 'gosu'
 require_relative '../constants/dimensions'
+require_relative './colors/tile'
 
 class Tile
   include Dimensions
+  include Colors::Tile
 
-  attr_reader :x, :y
+  attr_reader :x, :y, :height
 
-  def initialize(x, y)
+  def initialize(x, y, height: 0)
     @x = x
     @y = y
+    @height = height
   end
 
   def draw
@@ -17,19 +20,7 @@ class Tile
       TILE_SIZE * y,
       TILE_SIZE,
       TILE_SIZE,
-      mix_color
+      color_by_elevation(height)
     )
-  end
-
-  def memoized_colors
-    @memoized_colors ||= {}
-  end
-
-  def mix_color
-    color = Gosu::Color::BLACK.dup
-    color.red = rand(256 - 40) + 40
-    color.green = rand(256 - 40) + 40
-    color.blue = rand(256 - 40) + 40
-    color
   end
 end
