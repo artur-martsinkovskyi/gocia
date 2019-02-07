@@ -1,7 +1,6 @@
 require 'gosu'
 require_relative 'tile'
 require_relative '../constants/dimensions'
-require_relative '../services/terrain/slate_generator'
 
 class Map
   include Dimensions

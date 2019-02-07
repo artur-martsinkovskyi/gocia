@@ -1,10 +1,9 @@
 require 'gosu'
 require_relative '../constants/dimensions'
-require_relative './colors/tile'
+require_relative '../services/terrain/tile_color_picker'
 
 class Tile
   include Dimensions
-  include Colors::Tile
 
   attr_reader :x, :y, :height
 
@@ -20,7 +19,7 @@ class Tile
       TILE_SIZE * y,
       TILE_SIZE,
       TILE_SIZE,
-      color_by_elevation(height)
+      Terrain::TileColorPicker.call(height)
     )
   end
 end
