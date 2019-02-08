@@ -1,9 +1,11 @@
 require 'gosu'
+require 'json'
 require 'rmagick'
 require_relative 'sidebar'
 require_relative 'map'
 require_relative 'cursor'
 require_relative '../constants/dimensions'
+require_relative '../services/terrain/heightmap_generator'
 
 class MainScreen < Gosu::Window
   include Dimensions
@@ -12,7 +14,7 @@ class MainScreen < Gosu::Window
     super WIDTH, HEIGHT
     self.caption = 'Socia'
     @sidebar = Sidebar.new
-    @heights = Terrain::SlateGenerator.new(TILE_COUNT * 2, TILE_COUNT * 2).call
+    @heights = Terrain::HeightmapGenerator.call(TILE_COUNT, TILE_COUNT)
     @map     = Map.new(@heights)
     @cursor = Cursor.new
   end

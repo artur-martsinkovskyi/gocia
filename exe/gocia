@@ -3,4 +3,3 @@
 require_relative '../lib/views/main_screen'
 
 MainScreen.new.show
-

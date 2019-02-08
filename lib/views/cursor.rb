@@ -10,7 +10,7 @@ class Cursor
   def initialize
     @pointer = Gosu::Image.new(
       Magick::Image.new(TILE_SIZE, TILE_SIZE) do
-        self.background_color = "black"
+        self.background_color = 'black'
       end
     )
     @position = Position.new(

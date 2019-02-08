@@ -19,6 +19,7 @@ class Position
 
   def left
     return if @abs_x == @left_limit
+
     @abs_x -= @step_x
     @rel_x -= 1
   end
