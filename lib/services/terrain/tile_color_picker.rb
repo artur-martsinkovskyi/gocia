@@ -1,17 +1,11 @@
-require_relative '../service'
 require_relative '../../constants/colors'
 
 module Terrain
-  class TileColorPicker < Service
+  module TileColorPicker
     include Colors
-    private
 
-    def initialize(elevation)
-      @elevation = elevation
-    end
-
-    def call
-      case @elevation
+    def self.call(elevation)
+      case elevation
       when 0.95..1   then WHITE
       when 0.9..0.95 then GREY
       when 0.8..0.9  then BROWN

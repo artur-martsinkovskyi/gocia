@@ -29,7 +29,6 @@ module Terrain
 
     private
 
-
     def noise(x, y)
       (@noise[x, y] / 2) + 0.5
     end
