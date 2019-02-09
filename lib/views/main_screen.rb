@@ -15,7 +15,8 @@ class MainScreen < Gosu::Window
     self.caption = 'Socia'
     @sidebar = Sidebar.new
     @heights = Terrain::HeightmapGenerator.call(TILE_COUNT, TILE_COUNT)
-    @map     = Map.new(@heights)
+    @moists = Terrain::HeightmapGenerator.call(TILE_COUNT, TILE_COUNT, 12)
+    @map    = Map.new(@heights, @moists)
     @cursor = Cursor.new
   end
 
@@ -54,7 +55,8 @@ class MainScreen < Gosu::Window
     {
       x_pos: x_pos,
       y_pos: y_pos,
-      altitude: @heights[x_pos][y_pos]
+      altitude: @heights[x_pos][y_pos],
+      moist: @moists[x_pos][y_pos]
     }
   end
 end

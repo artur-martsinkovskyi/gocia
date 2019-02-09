@@ -5,10 +5,10 @@ require_relative '../constants/dimensions'
 class Map
   include Dimensions
 
-  def initialize(heights)
+  def initialize(heights, moists)
     @tiles = (0...TILE_COUNT).flat_map do |i|
       (0...TILE_COUNT).map do |j|
-        Tile.new(i, j, height: heights[i][j])
+        Tile.new(i, j, height: heights[i][j], moist: moists[i][j])
       end
     end
   end

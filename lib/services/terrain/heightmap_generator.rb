@@ -3,17 +3,16 @@ require_relative '../service'
 
 module Terrain
   class HeightmapGenerator < Service
-    attr_reader :max_noise
-
     private
 
-    def initialize(width, height)
+    def initialize(width, height, noise_seed = 1)
       @width = width
       @height = height
+      @noise_seed = noise_seed
     end
 
-    def call(noise_seed = 1)
-      @noise = Perlin::Generator.new(noise_seed, 2.0, 1)
+    def call
+      @noise = Perlin::Generator.new(@noise_seed, 2.0, 1)
       Array.new(@width) do |y|
         Array.new(@height) do |x|
           nx = 6 * (x.to_f / @width - 0.5)

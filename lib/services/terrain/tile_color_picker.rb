@@ -4,19 +4,35 @@ module Terrain
   module TileColorPicker
     include Colors
 
-    def self.call(elevation)
-      case elevation
-      when 0.95..1   then WHITE
-      when 0.9..0.95 then GREY
-      when 0.8..0.9  then BROWN
-      when 0.7..0.8  then DESERT_YELLOW
-      when 0.6..0.7  then DARK_GREEN
-      when 0.3..0.6  then GREEN
-      when 0.2..0.3  then SANDY
-      when 0.1..0.2  then LIGHT_BLUE
-      when 0.05..0.1 then BLUE
-      when 0.0..0.1  then DEEP_BLUE
+    def self.call(elevation, moist)
+      return DEEP_OCEAN if elevation < 0.05
+      return OCEAN if elevation < 0.1
+      return BEACH if elevation < 0.2
+      if elevation > 0.8
+        return SCORCHED if moist < 0.1
+        return BARE if moist < 0.2
+        return TUNDRA if moist < 0.5
+        return WHITE
       end
+
+      if elevation > 0.6
+        return TEMPERATE_DESERT if moist < 0.33
+        return SHRUBLAND if moist < 0.66
+        return TAIGA
+      end
+
+      if elevation > 0.3
+        return TEMPERATE_DESERT if moist < 0.16
+        return GRASSLAND if moist < 0.5
+        return TEMPERATE_DECIDUOUS_FOREST if moist < 0.83
+        return TEMPERATE_RAIN_FOREST
+      end
+
+      return SUBTROPICAL_DESERT if moist < 0.16
+      return GRASSLAND if moist < 0.33
+      return TROPICAL_SEASONAL_FOREST if moist < 0.66
+
+      TROPICAL_RAIN_FOREST
     end
   end
 end
