@@ -14,7 +14,10 @@ class Cursor
       end
     )
     @position = Position.new(
-      position_x: SIDEBAR_WIDTH,
+      left_limit: SIDEBAR_WIDTH,
+      right_limit: SIDEBAR_WIDTH + MAP_SIZE - TILE_SIZE,
+      top_limit: 0,
+      bottom_limit: MAP_SIZE - TILE_SIZE,
       step_x: TILE_SIZE
     )
   end

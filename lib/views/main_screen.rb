@@ -15,8 +15,8 @@ class MainScreen < Gosu::Window
     self.caption = 'Socia'
     @sidebar = Sidebar.new
     @heights = Terrain::HeightmapGenerator.call(TILE_COUNT, TILE_COUNT)
-    @map     = Map.new(@heights)
     @cursor = Cursor.new
+    @map = Map.new(@heights)
   end
 
   def draw
@@ -34,14 +34,16 @@ class MainScreen < Gosu::Window
   end
 
   def button_up(id)
-    if id == Gosu::KB_RIGHT
-      @cursor.move(:right)
-    elsif id == Gosu::KB_LEFT
+    if id == Gosu::KB_LEFT
       @cursor.move(:left)
+    elsif id == Gosu::KB_RIGHT
+      @cursor.move(:right)
     elsif id == Gosu::KB_UP
       @cursor.move(:up)
     elsif id == Gosu::KB_DOWN
       @cursor.move(:down)
+    elsif [Gosu::KB_W, Gosu::KB_S, Gosu::KB_A, Gosu::KB_D].include?(id)
+      @map.move(id)
     else
       super
     end
@@ -52,8 +54,8 @@ class MainScreen < Gosu::Window
   def sidebar_info
     x_pos, y_pos = @cursor.position.relative_position
     {
-      x_pos: x_pos,
-      y_pos: y_pos,
+      x_pos: x_pos + (@map.current_map_x_offset),
+      y_pos: y_pos + (@map.current_map_y_offset),
       altitude: @heights[x_pos][y_pos]
     }
   end

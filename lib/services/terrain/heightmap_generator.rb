@@ -22,7 +22,7 @@ module Terrain
               0.5  * noise(2 * nx, 2 * ny) +
               0.25 * noise(8 * nx, 8 * ny)
           e /= 1 + 0.5 + 0.25
-          Math.cos(e) ** 7
+          Math.cos(e) ** 1
         end
       end
     end
