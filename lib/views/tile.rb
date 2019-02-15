@@ -5,12 +5,12 @@ require_relative '../services/terrain/tile_color_picker'
 class Tile
   include Dimensions
 
-  attr_reader :x, :y, :height
+  attr_reader :x, :y, :color
 
-  def initialize(x, y, height: 0)
+  def initialize(x:, y:, color:)
     @x = x
     @y = y
-    @height = height
+    @color = color
   end
 
   def draw
@@ -19,7 +19,7 @@ class Tile
       TILE_SIZE * y,
       TILE_SIZE,
       TILE_SIZE,
-      Terrain::TileColorPicker.call(height)
+      color
     )
   end
 end

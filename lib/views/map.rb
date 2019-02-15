@@ -1,14 +1,14 @@
 require 'pry'
-require 'gosu'
 require_relative 'tile'
+require_relative '../objects/slate'
 require_relative '../constants/dimensions'
 
 class Map
   include Dimensions
   attr_reader :current_map_x_offset, :current_map_y_offset
 
-  def initialize(heights)
-    @heights = heights
+  def initialize(slates)
+    @slates = slates
     @current_map_x_offset = 0
     @current_map_y_offset = 0
     @map_changed = true
@@ -17,18 +17,22 @@ class Map
   def move(id)
     if id == Gosu::KB_D
       return if @current_map_x_offset + VIEWPORT_SIZE == TILE_COUNT
+
       @current_map_x_offset += VIEWPORT_SIZE
       @map_changed = true
     elsif id == Gosu::KB_A
       return if @current_map_x_offset - VIEWPORT_SIZE < 0
+
       @current_map_x_offset -= VIEWPORT_SIZE
       @map_changed = true
     elsif id == Gosu::KB_W
       return if @current_map_y_offset + VIEWPORT_SIZE == TILE_COUNT
+
       @current_map_y_offset += VIEWPORT_SIZE
       @map_changed = true
     elsif id == Gosu::KB_S
       return if @current_map_y_offset - VIEWPORT_SIZE < 0
+
       @current_map_y_offset -= VIEWPORT_SIZE
       @map_changed = true
     end
@@ -43,9 +47,13 @@ class Map
       @tiles
     else
       @map_changed = false
-      @tiles = @heights[current_map_y].map.with_index do |row, i|
-        row[current_map_x].map.with_index do |height, j|
-          Tile.new(i, j, height: height)
+      @tiles = @slates[current_map_y].map.with_index do |row, i|
+        row[current_map_x].map.with_index do |slate, j|
+          Tile.new(
+            x: i,
+            y: j,
+            color: slate.color
+          )
         end
       end.flatten
     end

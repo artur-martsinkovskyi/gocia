@@ -5,7 +5,7 @@ require_relative 'sidebar'
 require_relative 'map'
 require_relative 'cursor'
 require_relative '../constants/dimensions'
-require_relative '../services/terrain/heightmap_generator'
+require_relative '../services/terrain/slate_map_generator'
 
 class MainScreen < Gosu::Window
   include Dimensions
@@ -14,9 +14,9 @@ class MainScreen < Gosu::Window
     super WIDTH, HEIGHT
     self.caption = 'Socia'
     @sidebar = Sidebar.new
-    @heights = Terrain::HeightmapGenerator.call(TILE_COUNT, TILE_COUNT)
+    @slates = Terrain::SlateMapGenerator.call(TILE_COUNT, TILE_COUNT)
+    @map    = Map.new(@slates)
     @cursor = Cursor.new
-    @map = Map.new(@heights)
   end
 
   def draw
@@ -52,11 +52,16 @@ class MainScreen < Gosu::Window
   private
 
   def sidebar_info
-    x_pos, y_pos = @cursor.position.relative_position
+    x, y = @cursor.position
+                  .relative_position
+                  .zip([@map.current_map_x_offset, @map.current_map_y_offset])
+                  .map(&:sum)
+    current_slate = @slates[x][y]
     {
-      x_pos: x_pos + (@map.current_map_x_offset),
-      y_pos: y_pos + (@map.current_map_y_offset),
-      altitude: @heights[x_pos][y_pos]
+      x_pos: current_slate.x,
+      y_pos: current_slate.y,
+      height: current_slate.height,
+      moist: current_slate.moist
     }
   end
 end
