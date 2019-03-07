@@ -1,5 +1,12 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/views/main_screen'
+require 'require_all'
+
+require 'gosu'
+require 'yaml'
+require 'pry'
+require_relative '../lib/gocia'
+
+require_rel '../lib'
 
 MainScreen.new.show

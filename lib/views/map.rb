@@ -1,9 +1,3 @@
-require 'pry'
-require_relative 'tile'
-require_relative '../objects/slate'
-require_relative '../constants/dimensions'
-require_relative 'view_objects/slate'
-
 class Map
   include Dimensions
   attr_reader :current_map_x_offset, :current_map_y_offset

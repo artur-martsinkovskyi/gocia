@@ -1,7 +1,3 @@
-require_relative 'heightmap_generator'
-require_relative '../../objects/slate'
-require_relative '../service'
-
 module Terrain
   class SlateMapGenerator < Service
     attr_reader :width, :height
@@ -14,12 +10,17 @@ module Terrain
     def call
       heights.map.with_index do |row, i|
         row.map.with_index do |height_value, j|
-          Slate.new(
+          slate = Slate.new(
             i,
             j,
             height_value,
             moists[i][j]
           )
+          r_value = slate.biome.r_value
+          if r_value && heights[i][j] == heights[(i - r_value)...(i + r_value)].map { |r| r[(j - r_value)...(j + r_value)] }.flatten.max
+            slate.contents << Tree.new
+          end
+          slate
         end
       end
     end

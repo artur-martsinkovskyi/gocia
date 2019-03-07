@@ -1,6 +1,3 @@
-require 'gosu'
-require_relative '../../constants/dimensions'
-
 module ViewObjects
   class Tree
     include Dimensions
@@ -14,13 +11,12 @@ module ViewObjects
     end
 
     def draw
-      return
       Gosu.draw_rect(
         TILE_SIZE * x + SIDEBAR_WIDTH,
         TILE_SIZE * y,
         TILE_SIZE / 2,
         TILE_SIZE / 2,
-        Gosu::Color::RED
+        Colors::TROPICAL_RAIN_FOREST
       )
     end
   end

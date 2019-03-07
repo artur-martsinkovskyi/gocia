@@ -1,8 +1,3 @@
-require 'gosu'
-require 'yaml'
-
-require_relative '../constants/dimensions'
-
 class Sidebar
   include Dimensions
 

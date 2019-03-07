@@ -1,11 +1,10 @@
 require 'perlin'
-require_relative '../service'
 
 module Terrain
   class HeightmapGenerator < Service
     private
 
-    def initialize(width, height, noise_seed = 2)
+    def initialize(width, height, noise_seed = 10)
       @width = width
       @height = height
       @noise_seed = noise_seed

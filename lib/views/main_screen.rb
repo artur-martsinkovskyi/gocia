@@ -1,11 +1,4 @@
-require 'gosu'
-require 'json'
 require 'rmagick'
-require_relative 'sidebar'
-require_relative 'map'
-require_relative 'cursor'
-require_relative '../constants/dimensions'
-require_relative '../services/terrain/slate_map_generator'
 
 class MainScreen < Gosu::Window
   include Dimensions
@@ -17,9 +10,7 @@ class MainScreen < Gosu::Window
     @slates = Terrain::SlateMapGenerator.call(TILE_COUNT, TILE_COUNT)
     @map    = Map.new(@slates)
     @cursor = Cursor.new
-    @song = Gosu::Song.new(
-      '/home/artur/workspace/github/artur-martsinkovskyi/gocia/assets/8beethoven.mp3'
-    )
+    @sound_engine = SoundEngine.new
   end
 
   def draw
@@ -29,14 +20,9 @@ class MainScreen < Gosu::Window
   end
 
   def button_down(id)
+    @sound_engine.command.execute(self, id)
     if id == Gosu::KB_ESCAPE
       close
-    elsif id == Gosu::KB_M
-      if @song.playing?
-        @song.pause
-      else
-        @song.play
-      end
     else
       super
     end

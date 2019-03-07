@@ -1,7 +1,3 @@
-require 'gosu'
-require_relative '../../constants/dimensions'
-require_relative 'tree'
-
 module ViewObjects
   class Slate
     include Dimensions
@@ -20,11 +16,10 @@ module ViewObjects
         TILE_SIZE * y,
         TILE_SIZE,
         TILE_SIZE,
-        slate.color
+        slate.biome.color
       )
-      slate.contents.select { |content| content.is_a?(::Tree) }
-              .each do |content|
-        ViewObjects::Tree.new(x: x, y: y, tree: content).draw
+      slate.contents.each do |content|
+        Object.const_get("ViewObjects::#{content.class}").new(x: x, y: y, tree: content).draw
       end
     end
   end
