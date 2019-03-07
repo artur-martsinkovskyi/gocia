@@ -31,7 +31,7 @@ module Terrain
     end
 
     def moists
-      @moists ||= Terrain::HeightmapGenerator.call(width, height, 12)
+      @moists ||= Terrain::HeightmapGenerator.call(width, height, rand(10000))
     end
   end
 end

@@ -17,6 +17,9 @@ class MainScreen < Gosu::Window
     @slates = Terrain::SlateMapGenerator.call(TILE_COUNT, TILE_COUNT)
     @map    = Map.new(@slates)
     @cursor = Cursor.new
+    @song = Gosu::Song.new(
+      '/home/artur/workspace/github/artur-martsinkovskyi/gocia/assets/8beethoven.mp3'
+    )
   end
 
   def draw
@@ -28,6 +31,12 @@ class MainScreen < Gosu::Window
   def button_down(id)
     if id == Gosu::KB_ESCAPE
       close
+    elsif id == Gosu::KB_M
+      if @song.playing?
+        @song.pause
+      else
+        @song.play
+      end
     else
       super
     end
@@ -52,16 +61,10 @@ class MainScreen < Gosu::Window
   private
 
   def sidebar_info
-    x, y = @cursor.position
-                  .relative_position
+    x, y = @cursor.relative_position
                   .zip([@map.current_map_x_offset, @map.current_map_y_offset])
                   .map(&:sum)
     current_slate = @slates[x][y]
-    {
-      x_pos: current_slate.x,
-      y_pos: current_slate.y,
-      height: current_slate.height,
-      moist: current_slate.moist
-    }
+    current_slate.to_h
   end
 end

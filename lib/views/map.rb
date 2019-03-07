@@ -2,6 +2,7 @@ require 'pry'
 require_relative 'tile'
 require_relative '../objects/slate'
 require_relative '../constants/dimensions'
+require_relative 'view_objects/slate'
 
 class Map
   include Dimensions
@@ -26,14 +27,14 @@ class Map
       @current_map_x_offset -= VIEWPORT_SIZE
       @map_changed = true
     elsif id == Gosu::KB_W
-      return if @current_map_y_offset + VIEWPORT_SIZE == TILE_COUNT
-
-      @current_map_y_offset += VIEWPORT_SIZE
-      @map_changed = true
-    elsif id == Gosu::KB_S
       return if @current_map_y_offset - VIEWPORT_SIZE < 0
 
       @current_map_y_offset -= VIEWPORT_SIZE
+      @map_changed = true
+    elsif id == Gosu::KB_S
+      return if @current_map_y_offset + VIEWPORT_SIZE == TILE_COUNT
+
+      @current_map_y_offset += VIEWPORT_SIZE
       @map_changed = true
     end
   end
@@ -47,12 +48,12 @@ class Map
       @tiles
     else
       @map_changed = false
-      @tiles = @slates[current_map_y].map.with_index do |row, i|
-        row[current_map_x].map.with_index do |slate, j|
-          Tile.new(
+      @tiles = @slates[current_map_x].map.with_index do |row, i|
+        row[current_map_y].map.with_index do |slate, j|
+          ViewObjects::Slate.new(
             x: i,
             y: j,
-            color: slate.color
+            slate: slate
           )
         end
       end.flatten

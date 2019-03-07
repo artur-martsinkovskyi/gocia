@@ -35,4 +35,8 @@ class Cursor
   def move(direction)
     @position.send(direction)
   end
+
+  def relative_position
+    @position.relative_position
+  end
 end

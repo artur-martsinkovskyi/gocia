@@ -16,7 +16,7 @@ class Position
     @bottom_limit = bottom_limit
     @top_limit = top_limit
     @abs_x = left_limit
-    @abs_y = bottom_limit
+    @abs_y = top_limit
     @step_x = step_x
     @step_y = step_y
   end
@@ -47,13 +47,13 @@ class Position
     return if @abs_y == @top_limit
 
     @abs_y -= @step_y
-    @rel_y += 1
+    @rel_y -= 1
   end
 
   def down
     return if @abs_y == @bottom_limit
 
     @abs_y += @step_y
-    @rel_y -= 1
+    @rel_y += 1
   end
 end
