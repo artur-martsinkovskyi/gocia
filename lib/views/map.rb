@@ -2,30 +2,30 @@ class Map
   include Dimensions
   attr_reader :current_map_x_offset, :current_map_y_offset
 
-  def initialize(slates)
-    @slates = slates
+  def initialize(window)
     @current_map_x_offset = 0
     @current_map_y_offset = 0
     @map_changed = true
+    @window = window
   end
 
-  def move(id)
-    if id == Gosu::KB_D
+  def move(direction)
+    if direction == :right
       return if @current_map_x_offset + VIEWPORT_SIZE == TILE_COUNT
 
       @current_map_x_offset += VIEWPORT_SIZE
       @map_changed = true
-    elsif id == Gosu::KB_A
+    elsif direction == :left
       return if @current_map_x_offset - VIEWPORT_SIZE < 0
 
       @current_map_x_offset -= VIEWPORT_SIZE
       @map_changed = true
-    elsif id == Gosu::KB_W
+    elsif direction == :up
       return if @current_map_y_offset - VIEWPORT_SIZE < 0
 
       @current_map_y_offset -= VIEWPORT_SIZE
       @map_changed = true
-    elsif id == Gosu::KB_S
+    elsif direction == :down
       return if @current_map_y_offset + VIEWPORT_SIZE == TILE_COUNT
 
       @current_map_y_offset += VIEWPORT_SIZE
@@ -34,15 +34,9 @@ class Map
   end
 
   def draw
-    tiles.each(&:draw)
-  end
-
-  def tiles
-    if @tiles && !@map_changed
-      @tiles
-    else
+    if @tiles.nil? || @map_changed
       @map_changed = false
-      @tiles = @slates[current_map_x].map.with_index do |row, i|
+      @tiles = window.world_engine.slates[current_map_x].map.with_index do |row, i|
         row[current_map_y].map.with_index do |slate, j|
           ViewObjects::Slate.new(
             x: i,
@@ -52,7 +46,13 @@ class Map
         end
       end.flatten
     end
+
+    @tiles.each(&:draw)
   end
+
+  private
+
+  attr_reader :window
 
   def current_map_y
     @current_map_y_offset..(@current_map_y_offset + VIEWPORT_SIZE)

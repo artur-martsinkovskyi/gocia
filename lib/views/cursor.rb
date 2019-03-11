@@ -1,11 +1,7 @@
-require 'gosu'
-require 'rmagick'
-require_relative '../constants/dimensions'
-require_relative '../position'
-
 class Cursor
   include Dimensions
   attr_reader :position
+
 
   def initialize
     @pointer = Gosu::Image.new(

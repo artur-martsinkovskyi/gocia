@@ -21,7 +21,6 @@ module Terrain
               0.25 * noise(8 * nx, 8 * ny)
           e /= 1 + 0.5 + 0.25
           e = Math.cos(e)**6
-          island_normalize(e, nx, ny)
         end
       end
     end
