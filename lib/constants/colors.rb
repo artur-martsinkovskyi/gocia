@@ -13,6 +13,7 @@ module Colors
   SANDY      = 0xFFFCECDF
   DESERT_YELLOW = 0xFFBA9561
   LEAF_GREEN = 0xFF30760D
+  MATRIX_GREEN = 0xFF00FF41
 
   BIOME_COLOR = lambda do |biome|
     case biome
@@ -37,7 +38,7 @@ module Colors
     when DEEP_WATER
       DEEP_BLUE
     else
-      raise ArgumentError, "Unknown biome."
+      raise ArgumentError, 'Unknown biome.'
     end
   end
 end

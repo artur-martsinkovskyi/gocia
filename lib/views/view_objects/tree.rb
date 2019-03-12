@@ -11,6 +11,13 @@ module ViewObjects
     end
 
     def draw
+      draw_base
+      fruit.draw if tree.fruit
+    end
+
+    private
+
+    def draw_base
       Gosu.draw_rect(
         TILE_SIZE * x + SIDEBAR_WIDTH,
         TILE_SIZE * y,
@@ -18,6 +25,10 @@ module ViewObjects
         TILE_SIZE / 2,
         Colors::LEAF_GREEN
       )
+    end
+
+    def fruit
+      Fruit.new(x: x, y: y, fruit: tree.fruit)
     end
   end
 end

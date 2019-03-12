@@ -1,27 +1,69 @@
 class Sidebar
   include Dimensions
-
-  FONT = Gosu::Font.new(20)
+  include Fonts
 
   def initialize(window)
     @window = window
   end
 
   def draw
-    Gosu.draw_rect(0, 0, SIDEBAR_WIDTH, HEIGHT, Gosu::Color::WHITE)
-    Gosu::Image.from_text('SOCIA', 150, bold: true).draw(0, 0, 0, 0.5, 0.5, Gosu::Color::BLACK)
-    Gosu::Image.from_text(info, 50).draw(0, 60, 0, 0.5, 0.5, Gosu::Color::BLACK)
+    draw_base
+    draw_title
+    draw_info
   end
 
   private
 
   attr_reader :window
 
+  def draw_base
+    Gosu.draw_rect(
+      0,
+      0,
+      SIDEBAR_WIDTH,
+      HEIGHT,
+      Gosu::Color::BLACK
+    )
+  end
+
+  def draw_title
+    Gosu::Image.from_text(
+      'SOCIA',
+      300,
+      bold: true,
+      font: AMATIC_REGULAR
+    ).draw(
+      0,
+      0,
+      0,
+      0.5,
+      0.5,
+      Gosu::Color::WHITE
+    )
+
+  end
+
+  def draw_info
+    Gosu::Image.from_text(
+      info,
+      70,
+      font: ARCHIVO_NARROW_REGULAR
+    ).draw(
+      0,
+      110,
+      0,
+      0.5,
+      0.5,
+      Gosu::Color::WHITE
+    )
+
+  end
+
   def info
     x, y = window.cursor.relative_position
       .zip([window.map.current_map_x_offset, window.map.current_map_y_offset])
       .map(&:sum)
     current_slate = window.world_engine.slates[x][y]
-    current_slate.to_h.to_yaml.to_s
+    current_slate.to_h.to_yaml
   end
 end

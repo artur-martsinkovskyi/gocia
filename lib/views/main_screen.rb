@@ -2,11 +2,12 @@ require 'rmagick'
 
 class MainScreen < Gosu::Window
   include Dimensions
+  include WithLoadscreen
 
   attr_reader :sound_engine,
-              :world_engine,
-              :map,
-              :cursor
+    :world_engine,
+    :map,
+    :cursor
 
   def initialize
     super WIDTH, HEIGHT
@@ -20,9 +21,11 @@ class MainScreen < Gosu::Window
   end
 
   def draw
-    @sidebar.draw
-    @map.draw
-    @cursor.draw
+    with_loadscreen do
+      @sidebar.draw
+      @map.draw
+      @cursor.draw
+    end
   end
 
   def button_down(id)

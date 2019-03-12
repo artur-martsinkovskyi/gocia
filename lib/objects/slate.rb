@@ -19,7 +19,8 @@ class Slate
       y: y,
       height: height,
       moist: moist,
-      biome: biome.to_h
+      biome: biome.to_h,
+      contents: contents.map(&:to_h)
     }
   end
 end
