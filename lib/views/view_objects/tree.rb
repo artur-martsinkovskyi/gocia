@@ -16,7 +16,7 @@ module ViewObjects
         TILE_SIZE * y,
         TILE_SIZE / 2,
         TILE_SIZE / 2,
-        Colors::TROPICAL_RAIN_FOREST
+        Colors::LEAF_GREEN
       )
     end
   end

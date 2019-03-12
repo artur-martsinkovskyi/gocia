@@ -16,7 +16,7 @@ module ViewObjects
         TILE_SIZE * y,
         TILE_SIZE,
         TILE_SIZE,
-        slate.biome.color
+        Colors::BIOME_COLOR[slate.biome]
       )
       slate.contents.each do |content|
         Object.const_get("ViewObjects::#{content.class}").new(x: x, y: y, tree: content).draw

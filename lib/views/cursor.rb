@@ -1,6 +1,7 @@
 class Cursor
   include Dimensions
   attr_reader :position
+  COLOR = 0x70ffffff
 
 
   def initialize
@@ -24,7 +25,7 @@ class Cursor
       1,
       1,
       1,
-      0x70ffffff
+      COLOR
     )
   end
 
