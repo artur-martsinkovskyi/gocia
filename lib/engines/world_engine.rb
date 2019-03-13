@@ -1,7 +1,8 @@
 class WorldEngine
   include Dimensions
+  attr_reader :slates
 
-  def slates
-    @slates ||= Terrain::SlateMapGenerator.call(TILE_COUNT, TILE_COUNT)
+  def initialize
+    @slates = Terrain::SlateMapGenerator.call(TILE_COUNT, TILE_COUNT)
   end
 end

@@ -16,12 +16,12 @@ class MainScreen < Gosu::Window
     @map    = Map.new(self)
     @cursor = Cursor.new
     @sound_engine = SoundEngine.new
-    @world_engine = WorldEngine.new
     @controls = Controls::Mapper.new(self)
+    @initializer = World::Initializer.new
   end
 
   def draw
-    with_loadscreen do
+    with_loadscreen(_until: @initializer.ready?) do
       @sidebar.draw
       @map.draw
       @cursor.draw
@@ -34,5 +34,9 @@ class MainScreen < Gosu::Window
 
   def button_up(id)
     @controls.button_up.trigger(signal: id)
+  end
+
+  def world_engine
+    @initializer.world_engine
   end
 end

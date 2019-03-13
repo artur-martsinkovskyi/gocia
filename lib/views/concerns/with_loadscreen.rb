@@ -1,9 +1,9 @@
 module WithLoadscreen
-  def with_loadscreen
-    if @loadscreen
+  def with_loadscreen(_until:)
+    if _until
       yield
     else
-      @loadscreen = Loadscreen.new
+      @loadscreen = Loadscreen.new unless @loadscreen
       @loadscreen.draw
     end
   end
