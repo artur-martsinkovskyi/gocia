@@ -2,22 +2,26 @@ require 'concurrent'
 
 module World
   class Initializer
-    attr_reader :world_engine
-
     def ready?
-      if initialization_process.resolved?
+      if initialization.fulfilled?
         true
+      elsif initialization.rejected?
+        raise initialization.reason
       else
         false
       end
     end
 
-    def initialization_process
-      @intialization_process ||= begin
-                                   Concurrent::Promises.future {
-                                     @world_engine = WorldEngine.new
-                                   }
-                                 end
+    def initialization
+      @initialization ||= begin
+                            Concurrent::Promises.future do
+                              WorldEngine.new
+                            end
+                          end
+    end
+
+    def world_engine
+      @world_engine ||= initialization.value
     end
   end
 end

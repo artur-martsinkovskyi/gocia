@@ -25,6 +25,17 @@ class Position
     [@abs_x, @abs_y]
   end
 
+  def absolute_position=(position)
+    return if position[0] < @left_limit
+
+    x = position[0].round - @left_limit
+    y = position[1].round
+    @rel_x = x / @step_x
+    @rel_y = y / @step_y
+    @abs_x = (@rel_x * @step_x) + @left_limit
+    @abs_y = @rel_y * @step_y
+  end
+
   def relative_position
     [@rel_x, @rel_y]
   end

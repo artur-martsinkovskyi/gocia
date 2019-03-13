@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class Loadscreen
   include Dimensions
   include Fonts
@@ -5,10 +7,10 @@ class Loadscreen
 
 
   def initialize
-    @content = Gosu::Image.from_text(
+    @title = Gosu::Image.from_text(
       %q{
-      SOCIA      EXISTENTIAL SIMULATOR
-      by ARTUR MARTSINKOVSKYI
+SOCIA      EXISTENTIAL SIMULATOR
+by ARTUR MARTSINKOVSKYI
       },
       300,
       font: AMATIC_REGULAR
@@ -18,7 +20,30 @@ class Loadscreen
   end
 
   def draw
-    @content.draw(20, 20, 0, 0.5, 0.5, Gosu::Color::WHITE)
-    @image.draw_rot(400, 240, 0, @angle += 25, 0.5, 0.5, 0.2, 0.2, Gosu::Color::WHITE)
+    @title.draw(145, 20, 0, 0.5, 0.5, Gosu::Color::WHITE)
+    @image.draw_rot(400, 240, 0, angle, 0.5, 0.5, 0.2, 0.2, Gosu::Color::WHITE)
+    Gosu.draw_rect(
+      0,
+      HEIGHT - 200,
+      WIDTH,
+      100,
+      Gosu::Color::WHITE
+    )
+    Gosu::Image.from_text(
+      SecureRandom.alphanumeric(50),
+      100,
+      font: VT323_REGULAR
+    ).draw(
+      0,
+      HEIGHT - 200,
+      0,
+      1,
+      1,
+      Gosu::Color::BLACK
+    )
+  end
+
+  def angle
+    @angle = (@angle + 25) % 360
   end
 end

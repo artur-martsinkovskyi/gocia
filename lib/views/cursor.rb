@@ -3,7 +3,6 @@ class Cursor
   attr_reader :position
   COLOR = 0x70ffffff
 
-
   def initialize
     @pointer = Gosu::Image.new(
       Magick::Image.new(TILE_SIZE, TILE_SIZE) do
@@ -31,6 +30,10 @@ class Cursor
 
   def move(direction)
     @position.send(direction)
+  end
+
+  def move_to(x, y)
+    @position.absolute_position = [x, y]
   end
 
   def relative_position

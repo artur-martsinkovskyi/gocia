@@ -20,6 +20,10 @@ class MainScreen < Gosu::Window
     @initializer = World::Initializer.new
   end
 
+  def needs_cursor?
+    @initializer.ready?
+  end
+
   def draw
     with_loadscreen(_until: @initializer.ready?) do
       @sidebar.draw
@@ -37,6 +41,6 @@ class MainScreen < Gosu::Window
   end
 
   def world_engine
-    @initializer.world_engine
+    @world_engine ||= @initializer.world_engine
   end
 end

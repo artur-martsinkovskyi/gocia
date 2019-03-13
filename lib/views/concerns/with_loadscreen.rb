@@ -3,7 +3,7 @@ module WithLoadscreen
     if _until
       yield
     else
-      @loadscreen = Loadscreen.new unless @loadscreen
+      @loadscreen ||= Loadscreen.new
       @loadscreen.draw
     end
   end

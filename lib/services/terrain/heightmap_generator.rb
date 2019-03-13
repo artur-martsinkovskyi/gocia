@@ -14,8 +14,8 @@ module Terrain
       @noise = Perlin::Generator.new(@noise_seed, 2.0, 1)
       Array.new(@width) do |y|
         Array.new(@height) do |x|
-          nx = 6 * (x.to_f / @width - 0.5)
-          ny = 6 * (y.to_f / @height - 0.5)
+          nx = 5 * (x.to_f / @width - 0.5)
+          ny = 5 * (y.to_f / @height - 0.5)
           e = 1    * noise(1 * nx, 1 * ny) +
               0.5  * noise(2 * nx, 2 * ny) +
               0.25 * noise(8 * nx, 8 * ny)
