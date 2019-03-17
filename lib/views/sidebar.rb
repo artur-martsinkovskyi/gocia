@@ -60,10 +60,20 @@ class Sidebar
   end
 
   def info
-    x, y = window.cursor.relative_position
-      .zip([window.map.current_map_x_offset, window.map.current_map_y_offset])
-      .map(&:sum)
-    current_slate = window.world_engine.slates[x][y]
+    x, y = cursor_world_absolute_position
+    current_slate = window.world_engine.world.slates[x][y]
     current_slate.to_h.to_yaml
+  end
+
+  def cursor_world_absolute_position
+    x, y = window.cursor
+                 .relative_position
+                 .zip(
+                   [
+                     window.map.current_map_x_offset,
+                     window.map.current_map_y_offset
+                   ]
+                 ).map(&:sum)
+    [x, y]
   end
 end

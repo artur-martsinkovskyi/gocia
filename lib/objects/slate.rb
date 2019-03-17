@@ -1,4 +1,6 @@
-class Slate
+require 'set'
+
+class Slate < GameObject
   attr_reader :x, :y, :height, :moist, :contents
 
   def initialize(x, y, height = 0, moist = 0)
@@ -6,7 +8,7 @@ class Slate
     @y = y
     @height = height
     @moist = moist
-    @contents = []
+    @contents = Set.new
   end
 
   def biome
@@ -14,13 +16,13 @@ class Slate
   end
 
   def to_h
-    {
+    super.merge(
       x: x,
       y: y,
       height: height,
       moist: moist,
       biome: biome.to_h,
       contents: contents.map(&:to_h)
-    }
+    )
   end
 end

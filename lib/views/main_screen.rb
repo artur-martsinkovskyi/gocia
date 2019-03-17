@@ -17,7 +17,7 @@ class MainScreen < Gosu::Window
     @cursor = Cursor.new
     @sound_engine = SoundEngine.new
     @controls = Controls::Mapper.new(self)
-    @initializer = World::Initializer.new
+    @initializer = Initializer.new
   end
 
   def needs_cursor?
@@ -34,6 +34,12 @@ class MainScreen < Gosu::Window
 
   def button_down(id)
     @controls.button_down.trigger(signal: id)
+    if id == Gosu::KB_Y
+      world_engine.world.step
+    end
+    if id == Gosu::KB_T
+      world_engine.world.step_back
+    end
   end
 
   def button_up(id)

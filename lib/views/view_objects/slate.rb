@@ -19,7 +19,7 @@ module ViewObjects
         Colors::BIOME_COLOR[slate.biome]
       )
       slate.contents.each do |content|
-        Object.const_get("ViewObjects::#{content.class}").new(x: x, y: y, tree: content).draw
+        Object.const_get("ViewObjects::#{content.class}").new(x: x, y: y, content: content).draw
       end
     end
   end

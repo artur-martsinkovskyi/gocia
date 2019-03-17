@@ -1,16 +1,13 @@
-class Tree
+class Tree < GameObject
   attr_reader :fruit
 
   def initialize
-    @fruit = if rand > 0.5
-               Fruit.new
-             end
+    @fruit = Fruit.new if rand > 0.5
   end
 
   def to_h
-    {
-      type: self.class.name,
+    super.merge(
       fruit: fruit.to_h
-    }
+    )
   end
 end

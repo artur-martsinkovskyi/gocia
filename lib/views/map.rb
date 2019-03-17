@@ -36,7 +36,7 @@ class Map
   def draw
     if @slates.nil? || @map_changed
       @map_changed = false
-      @slates = window.world_engine.slates[current_map_x].map.with_index do |row, i|
+      @slates = window.world_engine.world.slates[current_map_x].map.with_index do |row, i|
         row[current_map_y].map.with_index do |slate, j|
           ViewObjects::Slate.new(
             x: i,

@@ -1,4 +1,6 @@
-class Fruit
+require_relative 'game_object'
+
+class Fruit < GameObject
   def initialize
     @poisonous = rand < 0.1
   end
@@ -8,8 +10,8 @@ class Fruit
   end
 
   def to_h
-    {
+    super.merge(
       poisonous: poisonous?
-    }
+    )
   end
 end

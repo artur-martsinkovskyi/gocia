@@ -1,34 +1,29 @@
 module ViewObjects
-  class Tree
+  class Actor
     include Dimensions
 
-    attr_reader :x, :y, :tree
+    attr_reader :x, :y, :actor
 
     def initialize(x:, y:, content:)
       @x = x
       @y = y
-      @tree = content
+      @actor = content
     end
 
     def draw
       draw_base
-      fruit.draw if tree.fruit
     end
 
     private
 
     def draw_base
       Gosu.draw_rect(
-        TILE_SIZE * x + SIDEBAR_WIDTH,
-        TILE_SIZE * y,
+        TILE_SIZE * x + SIDEBAR_WIDTH + (TILE_SIZE / 2),
+        TILE_SIZE * y + (TILE_SIZE / 2),
         TILE_SIZE / 2,
         TILE_SIZE / 2,
-        Colors::LEAF_GREEN
+        Gosu::Color::FUCHSIA
       )
-    end
-
-    def fruit
-      Fruit.new(x: x, y: y, fruit: tree.fruit)
     end
   end
 end

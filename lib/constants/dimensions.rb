@@ -1,7 +1,7 @@
 module Dimensions
   SIDEBAR_WIDTH = 400 # px
   MAP_SIZE = 1024 # px
-  TILE_COUNT = 512 # tiles
+  TILE_COUNT = 64 # tiles
   VIEWPORT_SIZE = 64 # tiles
   TILE_SIZE = MAP_SIZE / VIEWPORT_SIZE
   HEIGHT = MAP_SIZE

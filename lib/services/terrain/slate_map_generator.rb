@@ -18,7 +18,7 @@ module Terrain
           )
           r_value = slate.biome.r_value
           if r_value && heights[i][j] == heights[(i - r_value)...(i + r_value)].map { |r| r[(j - r_value)...(j + r_value)] }.flatten.max
-            slate.contents << Tree.new
+            slate.contents.add(Tree.new)
           end
           slate
         end
