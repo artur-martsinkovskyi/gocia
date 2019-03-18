@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Terrain
   class SlateMapGenerator < Service
     attr_reader :width, :height
@@ -32,7 +34,7 @@ module Terrain
     end
 
     def moists
-      @moists ||= Terrain::HeightmapGenerator.call(width, height)
+      @moists ||= Terrain::HeightmapGenerator.call(width, height, 300)
     end
   end
 end

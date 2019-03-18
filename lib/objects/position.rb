@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Position
   attr_reader :rel_x, :rel_y
 

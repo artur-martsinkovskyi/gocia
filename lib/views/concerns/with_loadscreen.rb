@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module WithLoadscreen
   def with_loadscreen(_until:)
     if _until
@@ -8,4 +10,3 @@ module WithLoadscreen
     end
   end
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
 class Loadscreen
@@ -5,13 +7,12 @@ class Loadscreen
   include Fonts
   include Images
 
-
   def initialize
     @title = Gosu::Image.from_text(
-      %q{
+      '
 SOCIA      EXISTENTIAL SIMULATOR
 by ARTUR MARTSINKOVSKYI
-      },
+      ',
       300,
       font: AMATIC_REGULAR
     )

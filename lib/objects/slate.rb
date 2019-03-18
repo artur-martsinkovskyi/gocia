@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'set'
 
 class Slate < GameObject
@@ -21,7 +23,7 @@ class Slate < GameObject
       y: y,
       height: height,
       moist: moist,
-      biome: biome.to_h,
+      biome: biome.to_h.compact,
       contents: contents.map(&:to_h)
     )
   end

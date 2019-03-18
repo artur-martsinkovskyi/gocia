@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SoundEngine
   attr_reader :song
   SONG_PATH = Gocia.root.join('assets', 'audio', '8beethoven.mp3').freeze
@@ -10,4 +12,3 @@ class SoundEngine
     @command ||= Controls::SoundCommand.new(self)
   end
 end
-

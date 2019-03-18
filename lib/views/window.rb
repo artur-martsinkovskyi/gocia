@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 require 'rmagick'
 
-class MainScreen < Gosu::Window
+class Window < Gosu::Window
   include Dimensions
   include WithLoadscreen
 
   attr_reader :sound_engine,
-    :world_engine,
-    :map,
-    :cursor
+              :map,
+              :cursor
 
   def initialize
     super WIDTH, HEIGHT
@@ -26,6 +27,7 @@ class MainScreen < Gosu::Window
 
   def draw
     with_loadscreen(_until: @initializer.ready?) do
+      world_engine.world.step
       @sidebar.draw
       @map.draw
       @cursor.draw
@@ -34,12 +36,8 @@ class MainScreen < Gosu::Window
 
   def button_down(id)
     @controls.button_down.trigger(signal: id)
-    if id == Gosu::KB_Y
-      world_engine.world.step
-    end
-    if id == Gosu::KB_T
-      world_engine.world.step_back
-    end
+    world_engine.world.step if id == Gosu::KB_Y
+    world_engine.world.step_back if id == Gosu::KB_T
   end
 
   def button_up(id)

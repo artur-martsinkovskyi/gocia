@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Controls
   class SoundCommand
     attr_reader :engine

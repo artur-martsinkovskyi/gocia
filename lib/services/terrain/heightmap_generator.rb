@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'perlin'
 
 module Terrain
@@ -31,13 +33,12 @@ module Terrain
       (@noise[x, y] / 2) + 0.5
     end
 
-
     def island_normalize(e, nx, ny)
       nnx = (nx / 6)
       nny = (ny / 6)
 
       # d = 2 * [nnx.abs, nny.abs].max
-      d = 2 * Math.sqrt(nnx*nnx + nny*nny)
+      d = 2 * Math.sqrt(nnx * nnx + nny * nny)
       e = e + 0.1 - d**9
       e = e > 1 ? 1 : e
       e = e < 0 ? 0 : e

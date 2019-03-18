@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Gocia
-  APPLICATION_NAME = 'Socia'.freeze
+  APPLICATION_NAME = 'Socia'
 
   class << self
     def root

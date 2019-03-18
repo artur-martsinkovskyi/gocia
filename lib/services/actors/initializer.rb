@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Actors
   class Initializer
     def initialize(world)
@@ -5,7 +7,7 @@ module Actors
     end
 
     def call
-      placements = [[0, 0], [1, 1]]
+      placements = Array.new(1000) { [0, 0] }
       placements.map do |x, y|
         slate = world.slates[x][y]
         actor = Actor.new(world)

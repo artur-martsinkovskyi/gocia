@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 module AI
   class CommandEmitter
+    COMMANDS_LIMIT = 150
+
     attr_reader :actor
 
     def initialize(actor)
@@ -10,6 +14,10 @@ module AI
 
     def emit
       result = if @current_command_pos == commands.size
+                 if commands.size > COMMANDS_LIMIT
+                   commands.shift
+                   @current_command_pos -= 1
+                 end
                  command = command_builder.step
                  commands.push(command)
                  command
@@ -17,7 +25,7 @@ module AI
                  commands[@current_command_pos]
                end
       @current_command_pos += 1
-      result.call(actor)
+      result.call
     end
 
     def absorb
@@ -30,7 +38,7 @@ module AI
     private
 
     def command_builder
-      CommandBuilder.new(actor)
+      @command_builder ||= CommandBuilder.new(actor)
     end
 
     attr_reader :commands

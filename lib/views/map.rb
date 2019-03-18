@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Map
   include Dimensions
   attr_reader :current_map_x_offset, :current_map_y_offset

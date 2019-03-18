@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Sidebar
   include Dimensions
   include Fonts
@@ -40,7 +42,6 @@ class Sidebar
       0.5,
       Gosu::Color::WHITE
     )
-
   end
 
   def draw_info
@@ -56,7 +57,6 @@ class Sidebar
       0.5,
       Gosu::Color::WHITE
     )
-
   end
 
   def info

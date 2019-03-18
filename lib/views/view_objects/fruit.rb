@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewObjects
   class Fruit
     include Dimensions
@@ -11,6 +13,8 @@ module ViewObjects
     end
 
     def draw
+      return unless fruit
+
       Gosu.draw_rect(
         TILE_SIZE * x + SIDEBAR_WIDTH,
         TILE_SIZE * y,
@@ -19,6 +23,8 @@ module ViewObjects
         color
       )
     end
+
+    private
 
     def color
       if fruit.poisonous?

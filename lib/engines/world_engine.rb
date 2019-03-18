@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 class WorldEngine
-  include Dimensions
   attr_reader :world
 
   def initialize

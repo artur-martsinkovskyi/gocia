@@ -1,0 +1,23 @@
+AllCops:
+  TargetRubyVersion: 2.6
+
+Documentation:
+    Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 15
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+RSpec/ExampleLength:
+  Max: 10
+RSpec/NestedGroups:
+  Max: 4
+
+require: rubocop-rspec

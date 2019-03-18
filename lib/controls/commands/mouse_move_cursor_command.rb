@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Controls
   class MouseMoveCursorCommand
     attr_reader :cursor

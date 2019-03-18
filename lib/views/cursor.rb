@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Cursor
   include Dimensions
   attr_reader :position

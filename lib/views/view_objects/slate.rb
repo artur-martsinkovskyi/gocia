@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewObjects
   class Slate
     include Dimensions

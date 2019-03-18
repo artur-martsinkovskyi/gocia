@@ -1,44 +1,69 @@
+# frozen_string_literal: true
+
 require_relative '../../constants/dimensions'
 
-class MoveCommand
-  include Dimensions
+module AI
+  class MoveCommand
+    include Dimensions
 
-  attr_reader :actor
+    attr_reader :actor, :metadata
 
-  def call(entity)
-    @actor = entity
-    @previous_slate = entity.slate
-    slates = surrounding_slates(actor.slate.x, actor.slate.y)
-    slate = slates.sample
-    change_slate(slate)
-  end
+    def initialize(actor, metadata = {})
+      @actor = actor
+      @metadata = metadata
+    end
 
-  def redo
-    call
-  end
+    def call
+      @previous_slate = actor.slate
+      slates = surrounding_slates(actor.slate)
+      slate = if metadata[:direction]
+                next_slate = slates[metadata[:direction]]
+                if next_slate && rand(10) < 9
+                  next_slate
+                else
+                  metadata[:direction] = nil
+                  slates.compact.sample
+                end
+              else
+                next_slate = slates.compact.sample
+                metadata[:direction] = Displacement::DirectionDetector.new(@previous_slate, next_slate).call
+                next_slate
+              end
+      change_slate(slate)
+      actor
+    end
 
-  def undo
-    change_slate(@previous_slate)
-    @previous_slate = nil
-  end
+    def redo
+      call
+    end
 
-  private
+    def undo
+      change_slate(@previous_slate)
+      @previous_slate = nil
+      actor
+    end
 
-  def change_slate(slate)
-    actor.slate.contents.delete(actor)
-    actor.slate = slate
-    slate.contents.add(actor)
-  end
+    private
 
-  def surrounding_slates(x, y)
-    [x - 1, x, x + 1].map do |xx|
-      [y - 1, y, y + 1].map do |yy|
-        next if xx == x && yy == y
-        next if yy < 0 || yy > TILE_COUNT
-        next if xx < 0 || xx > TILE_COUNT
+    def change_slate(slate)
+      actor.slate.contents.delete(actor)
+      actor.slate = slate
+      slate.contents.add(actor)
+    end
 
-        actor.world.slates[xx][yy]
-      end
-    end.flatten.compact
+    def surrounding_slates(slate)
+      x, y = slate.x, slate.y
+      [x - 1, x, x + 1].map do |xx|
+        [y - 1, y, y + 1].map do |yy|
+          next if yy.negative? || yy >= TILE_COUNT
+          next if xx.negative? || xx >= TILE_COUNT
+
+          slate = actor.world.slates[xx][yy]
+          next if slate.biome.water?
+
+          slate
+        end
+      end.flatten
+    end
   end
 end

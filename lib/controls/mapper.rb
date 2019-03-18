@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Controls
   class Mapper
     attr_reader :context

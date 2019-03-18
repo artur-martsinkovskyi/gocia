@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewObjects
   class Actor
     include Dimensions
@@ -11,12 +13,6 @@ module ViewObjects
     end
 
     def draw
-      draw_base
-    end
-
-    private
-
-    def draw_base
       Gosu.draw_rect(
         TILE_SIZE * x + SIDEBAR_WIDTH + (TILE_SIZE / 2),
         TILE_SIZE * y + (TILE_SIZE / 2),

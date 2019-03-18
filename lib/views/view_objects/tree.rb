@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewObjects
   class Tree
     include Dimensions
@@ -12,7 +14,7 @@ module ViewObjects
 
     def draw
       draw_base
-      fruit.draw if tree.fruit
+      draw_fruit
     end
 
     private
@@ -27,8 +29,8 @@ module ViewObjects
       )
     end
 
-    def fruit
-      Fruit.new(x: x, y: y, fruit: tree.fruit)
+    def draw_fruit
+      Fruit.new(x: x, y: y, fruit: tree.fruit).draw
     end
   end
 end

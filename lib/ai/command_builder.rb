@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AI
   class CommandBuilder
     attr_reader :actor
@@ -7,7 +9,11 @@ module AI
     end
 
     def step
-      ::MoveCommand.new
+      MoveCommand.new(actor, metadata)
+    end
+
+    def metadata
+      @metadata ||= {}
     end
   end
 end

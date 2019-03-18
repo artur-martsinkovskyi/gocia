@@ -1,5 +1,15 @@
+# frozen_string_literal: true
+
 module Biomes
-  Biome = Struct.new(:name, :r_value)
+  Biome = Struct.new(:name, :r_value) do
+    def water?
+      name == 'shoal' || name == 'water' || name == 'deep_water'
+    end
+
+    def land?
+      !water?
+    end
+  end
   SNOW       = Biome.new('snow', nil)
   ROCKS      = Biome.new('rocks', nil)
   MOUNTAIN   = Biome.new('mountain', nil)
