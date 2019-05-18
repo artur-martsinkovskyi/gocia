@@ -13,12 +13,6 @@ describe Slate do
         expect(slate.moist).to eq(0)
       end
 
-      describe '#contents' do
-        subject { slate.contents }
-
-        it { is_expected.to be_a(Set) }
-      end
-
 
       describe '#biome' do
         subject(:slate) { described_class.new(1, 1, height, moist) }

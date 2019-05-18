@@ -19,6 +19,7 @@ class Window < Gosu::Window
     @sound_engine = SoundEngine.new
     @controls = Controls::Mapper.new(self)
     @initializer = Initializer.new
+    @pause = false
   end
 
   def needs_cursor?
@@ -27,7 +28,6 @@ class Window < Gosu::Window
 
   def draw
     with_loadscreen(_until: @initializer.ready?) do
-      world_engine.world.step
       @sidebar.draw
       @map.draw
       @cursor.draw
@@ -38,6 +38,12 @@ class Window < Gosu::Window
     @controls.button_down.trigger(signal: id)
     world_engine.world.step if id == Gosu::KB_Y
     world_engine.world.step_back if id == Gosu::KB_T
+    if id == Gosu::KB_P
+      @pause = !@pause
+    end
+    if id == Gosu::KB_C
+      binding.pry
+    end
   end
 
   def button_up(id)

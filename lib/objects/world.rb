@@ -6,7 +6,7 @@ class World < GameObject
   attr_reader :slates, :actors
 
   def initialize
-    @slates = Terrain::SlateMapGenerator.call(TILE_COUNT, TILE_COUNT)
+    @slates = Terrain::SlateMapGenerator.call(self, TILE_COUNT, TILE_COUNT)
     @actors = Actors::Initializer.new(self).call
   end
 

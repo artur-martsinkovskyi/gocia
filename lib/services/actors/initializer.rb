@@ -7,12 +7,11 @@ module Actors
     end
 
     def call
-      placements = Array.new(1000) { [0, 0] }
+      placements = Array.new(5) { [0, 0] }
+
       placements.map do |x, y|
         slate = world.slates[x][y]
-        actor = Actor.new(world)
-        actor.slate = slate
-        slate.contents.add(actor)
+        actor = Actor.new(world, slate)
         actor
       end
     end
