@@ -16,6 +16,7 @@ gem 'require_all'
 gem 'rmagick'
 gem 'rspec'
 gem 'rspec-parameterized'
+gem 'factory_bot'
 gem 'rubocop'
 gem 'rubocop-rspec'
 gem 'simplecov', require: false, group: :test

@@ -21,7 +21,9 @@ class Slate < GameObject
     left_limit = [0, x - distance].max
     top_limit  = [0, y - distance].max
 
-    world.slates[left_limit..(x + distance)].map { |r| r[top_limit..(y + distance)] }.flatten
+    world.slates[left_limit..(x + distance)].map do |r|
+      r[top_limit..(y + distance)]
+    end.flatten
   end
 
   def to_h
@@ -35,6 +37,10 @@ class Slate < GameObject
     )
   end
 
+  def inspect
+    to_h.slice(:x, :y, :height, :moist, :biome)
+  end
+
   def contents
     @contents ||= begin
                     result = Set.new
@@ -42,13 +48,14 @@ class Slate < GameObject
                     i = x
                     j = y
 
-                    return result unless r_value
+                    if r_value
 
                     r_field_max_value = world.slates[(i - r_value)...(i + r_value)].map do |r|
                       r[(j - r_value)...(j + r_value)]
                     end.flatten.map(&:height).max
 
                     result.add(Tree.new) if r_field_max_value == height
+                    end
 
                     result
                   end

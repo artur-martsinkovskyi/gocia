@@ -2,6 +2,7 @@
 
 class World < GameObject
   include Dimensions
+  include Signleton
 
   attr_reader :slates, :actors
 

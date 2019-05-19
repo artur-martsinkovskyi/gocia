@@ -4,6 +4,6 @@ class WorldEngine
   attr_reader :world
 
   def initialize
-    @world = World.new
+    @world = World.instance
   end
 end
