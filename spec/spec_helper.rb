@@ -29,16 +29,6 @@ require_relative '../lib/gocia'
 require_rel '../lib'
 require 'rspec-parameterized'
 
-require 'factory_bot'
-
-RSpec.configure do |config|
-  config.include FactoryBot::Syntax::Methods
-
-  config.before(:suite) do
-    FactoryBot.find_definitions
-  end
-end
-
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

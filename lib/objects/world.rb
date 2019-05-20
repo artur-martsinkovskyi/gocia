@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'singleton'
+
 class World < GameObject
   include Dimensions
-  include Signleton
+  include Singleton
 
   attr_reader :slates, :actors
 

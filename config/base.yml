@@ -1,0 +1,7 @@
+interface:
+  map_size: 1024
+  sidebar_width: 400
+  viewport_size: 64
+world:
+  tile_count: 256
+  actor_count: 10

@@ -4,7 +4,7 @@ require_relative '../../constants/dimensions'
 
 module AI
   class MoveCommand
-    include Dimensions
+    extend Dimensions
 
     attr_reader :actor, :metadata
 
@@ -35,6 +35,7 @@ module AI
 
     def pick_slate
       slates = actor.slate.surrounding_slates
+
       if metadata[:direction]
         next_slate = slates[metadata[:direction]]
         if next_slate && rand(10) < 9
