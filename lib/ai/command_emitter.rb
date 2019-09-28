@@ -4,7 +4,7 @@ module AI
   class CommandEmitter
     COMMANDS_LIMIT = 150
 
-    attr_reader :actor
+    attr_reader :actor, :commands
 
     def initialize(actor)
       @actor = actor
@@ -38,9 +38,7 @@ module AI
     private
 
     def command_builder
-      @command_builder ||= CommandBuilder.new(actor)
+      @command_builder ||= CommandBuilder.new(self)
     end
-
-    attr_reader :commands
   end
 end

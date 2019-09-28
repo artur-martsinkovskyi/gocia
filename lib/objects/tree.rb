@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Tree < GameObject
-  attr_reader :fruit
+  attr_accessor :fruit
 
   def initialize
     @fruit = Fruit.new if rand > 0.5

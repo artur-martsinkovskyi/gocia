@@ -2,18 +2,31 @@
 
 module AI
   class CommandBuilder
-    attr_reader :actor
+    attr_reader :emitter
 
-    def initialize(actor)
-      @actor = actor
+    def initialize(emitter)
+      @emitter = emitter
     end
 
     def step
-      MoveCommand.new(actor, metadata)
+      CompoundCommand.new(
+        MoveCommand.new(actor, metadata),
+        GatherFoodCommand.new(actor, metadata)
+      )
     end
 
     def metadata
       @metadata ||= {}
+    end
+
+    private
+
+    def commands
+      emitter.commands
+    end
+
+    def actor
+      emitter.actor
     end
   end
 end

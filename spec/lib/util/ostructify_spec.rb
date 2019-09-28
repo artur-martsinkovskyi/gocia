@@ -15,7 +15,7 @@ class TestHash
   end
 end
 
-shared_examples "to_ostruct" do
+shared_examples 'to_ostruct' do
   let(:hash) { { a: :b, c: :d } }
 
   it { is_expected.to be_instance_of(OpenStruct) }
@@ -48,8 +48,6 @@ describe Ostructify do
   describe '#to_frozen_ostruct' do
     subject { TestHash.new(hash).to_frozen_ostruct }
 
-    it_behaves_like 'to_ostruct'
-
     let(:hash) do
       {
         a: {
@@ -60,7 +58,9 @@ describe Ostructify do
       }
     end
 
-    it "returns deeply frozen ostruct" do
+    it_behaves_like 'to_ostruct'
+
+    it 'returns deeply frozen ostruct' do
       expect(subject).to be_frozen
       expect(subject.a).to be_frozen
       expect(subject.a.b).to be_frozen

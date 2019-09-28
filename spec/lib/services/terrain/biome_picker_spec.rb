@@ -42,7 +42,6 @@ describe Terrain::BiomePicker do
     end
   end
 
-
   describe '#land?' do
     where(:case_name, :biome) do
       [

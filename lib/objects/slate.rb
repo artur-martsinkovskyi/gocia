@@ -50,11 +50,11 @@ class Slate < GameObject
 
                     if r_value
 
-                    r_field_max_value = world.slates[(i - r_value)...(i + r_value)].map do |r|
-                      r[(j - r_value)...(j + r_value)]
-                    end.flatten.map(&:height).max
+                      r_field_max_value = world.slates[(i - r_value)...(i + r_value)].map do |r|
+                        r[(j - r_value)...(j + r_value)]
+                      end.flatten.map(&:height).max
 
-                    result.add(Tree.new) if r_field_max_value == height
+                      result.add(Tree.new) if r_field_max_value == height
                     end
 
                     result

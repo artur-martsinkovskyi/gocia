@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
 
 Documentation:
     Enabled: false
@@ -12,6 +12,9 @@ Naming/UncommunicativeMethodParamName:
 
 Metrics/MethodLength:
   Max: 15
+
+Metrics/LineLength:
+  Max: 120
 
 RSpec/VerifiedDoubles:
   Enabled: false

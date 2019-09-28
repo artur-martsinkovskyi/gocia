@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Displacement
   class DirectionDetector
     NORTH = 2

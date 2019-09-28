@@ -8,10 +8,12 @@ class Actor < GameObject
 
   attr_reader :world
   attr_reader :slate
+  attr_accessor :health
 
   def initialize(world, slate)
     @world = world
     @slate = slate
+    @health = 10
   end
 
   def step
@@ -26,11 +28,20 @@ class Actor < GameObject
     slate.contents.delete(self)
     to.contents.add(self)
     self.slate = to
+    self.health -= 1
   end
 
-  def inspect
-    to_h.merge(
-      slate: slate
+  def consume(_)
+    self.health += 2 if health <= 8
+  end
+
+  def deconsume(_)
+    self.health -= 2 if self.health >= 2
+  end
+
+  def to_h
+    super.merge(
+      health: health
     )
   end
 

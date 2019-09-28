@@ -38,12 +38,8 @@ class Window < Gosu::Window
     @controls.button_down.trigger(signal: id)
     world_engine.world.step if id == Gosu::KB_Y
     world_engine.world.step_back if id == Gosu::KB_T
-    if id == Gosu::KB_P
-      @pause = !@pause
-    end
-    if id == Gosu::KB_C
-      binding.pry
-    end
+    @pause = !@pause if id == Gosu::KB_P
+    binding.pry if id == Gosu::KB_C
   end
 
   def button_up(id)

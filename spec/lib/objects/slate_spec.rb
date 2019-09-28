@@ -92,15 +92,16 @@ describe Slate do
     let(:world) do
       double('World', slates: slates)
     end
+
     before do
       slates[x][y] = slate
     end
 
-    context "when parameter is supplied" do
+    context 'when parameter is supplied' do
       let(:x) { 2 }
       let(:y) { 2 }
 
-      it "returns surrounding slates" do
+      it 'returns surrounding slates' do
         expect(slate.surrounding_slates(2)).to eq(
           [
             1, 2, 3, 4, 5,
@@ -113,11 +114,11 @@ describe Slate do
       end
     end
 
-    context "when no parameter supplied" do
+    context 'when no parameter supplied' do
       let(:x) { 1 }
       let(:y) { 1 }
 
-      it "returns surrounding slates" do
+      it 'returns surrounding slates' do
         expect(slate.surrounding_slates).to eq(
           [
             1, 2, 3,
@@ -127,11 +128,11 @@ describe Slate do
         )
       end
 
-      context "when left and top limit are close" do
+      context 'when left and top limit are close' do
         let(:x) { 0 }
         let(:y) { 0 }
 
-        it "returns surrounding slates" do
+        it 'returns surrounding slates' do
           expect(slate.surrounding_slates).to eq(
             [
               slate, 2,
