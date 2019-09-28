@@ -10,21 +10,20 @@ module AI
     end
 
     def call
-      slate = surrounding_slates.detect do |slate|
+      food_slate = surrounding_slates.detect do |slate|
         slate.contents.any? do |content|
           content.is_a?(Tree) && content.fruit
         end
       end
 
-      return unless slate
+      return unless food_slate
 
-      @tree = slate.contents.detect do |content|
+      @tree = food_slate.contents.detect do |content|
         content.is_a?(Tree) && content.fruit
       end
 
       @fruit = @tree.fruit
       @tree.fruit = nil
-      actor.consume(@fruit)
     end
 
     def redo
@@ -35,7 +34,6 @@ module AI
       return unless @tree
 
       @tree.fruit = @fruit
-      actor.deconsume(@fruit)
     end
 
     private

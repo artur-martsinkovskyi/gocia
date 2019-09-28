@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Slate do
-  subject(:slate) { described_class.new(world, 1, 1) }
+  subject(:slate) { described_class.new(world: world, x: 1, y: 1) }
 
   let(:world) do
     double(
@@ -16,10 +16,10 @@ describe Slate do
     end
 
     context 'when height and moist are given' do
-      subject(:slate) { described_class.new(world, 1, 1, height, moist) }
+      subject(:slate) { described_class.new(world: world, x: 1, y: 1, height: height, moist: moist) }
 
-      let(:height) { spy }
-      let(:moist)  { spy }
+      let(:height) { 12 }
+      let(:moist)  { 12 }
 
       it { is_expected.to have_attributes(height: height, moist: moist) }
     end
@@ -66,10 +66,10 @@ describe Slate do
   end
 
   describe '#biome' do
-    subject(:slate) { described_class.new(world, 1, 1, height, moist) }
+    subject(:slate) { described_class.new(world: world, x: 1, y: 1, height: height, moist: moist) }
 
-    let(:height) { spy }
-    let(:moist)  { spy }
+    let(:height) { 100 }
+    let(:moist)  { 14 }
 
     before do
       allow(Terrain::BiomePicker).to receive(:call)
@@ -83,7 +83,7 @@ describe Slate do
   end
 
   describe '#surrounding_slates' do
-    subject(:slate) { described_class.new(world, x, y) }
+    subject(:slate) { described_class.new(world: world, x: x, y: y) }
 
     let(:slates) do
       (1..25).each_slice(5).map(&:itself).tap { |a| p a }
@@ -149,10 +149,10 @@ describe Slate do
       expect(slate.to_h).to match(
         x: 1,
         y: 1,
-        height: 0,
-        moist: 0,
+        height: 0.0,
+        moist: 0.0,
         contents: [],
-        type: 'Slate',
+        type: 'slate',
         biome: { name: 'deep_water' }
       )
     end

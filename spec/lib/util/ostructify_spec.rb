@@ -33,20 +33,20 @@ shared_examples 'to_ostruct' do
     end
 
     it 'resolves a hash to a nested ostruct' do
-      expect(subject.a.b.c).to eq(:d)
+      expect(ostructed_hash.a.b.c).to eq(:d)
     end
   end
 end
 
 describe Ostructify do
   describe '#to_ostruct' do
-    subject { TestHash.new(hash).to_ostruct }
+    subject(:ostructed_hash) { TestHash.new(hash).to_ostruct }
 
     it_behaves_like 'to_ostruct'
   end
 
   describe '#to_frozen_ostruct' do
-    subject { TestHash.new(hash).to_frozen_ostruct }
+    subject(:ostructed_hash) { TestHash.new(hash).to_frozen_ostruct }
 
     let(:hash) do
       {
@@ -61,9 +61,9 @@ describe Ostructify do
     it_behaves_like 'to_ostruct'
 
     it 'returns deeply frozen ostruct' do
-      expect(subject).to be_frozen
-      expect(subject.a).to be_frozen
-      expect(subject.a.b).to be_frozen
+      expect(ostructed_hash).to be_frozen
+      expect(ostructed_hash.a).to be_frozen
+      expect(ostructed_hash.a.b).to be_frozen
     end
   end
 end

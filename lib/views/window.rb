@@ -27,7 +27,7 @@ class Window < Gosu::Window
   end
 
   def draw
-    with_loadscreen(_until: @initializer.ready?) do
+    with_loadscreen(before: @initializer.ready?) do
       @sidebar.draw
       @map.draw
       @cursor.draw
@@ -39,7 +39,9 @@ class Window < Gosu::Window
     world_engine.world.step if id == Gosu::KB_Y
     world_engine.world.step_back if id == Gosu::KB_T
     @pause = !@pause if id == Gosu::KB_P
+    # rubocop:disable Lint/Debugger
     binding.pry if id == Gosu::KB_C
+    # rubocop:enable Lint/Debugger
   end
 
   def button_up(id)

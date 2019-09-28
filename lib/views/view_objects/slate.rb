@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
+require_relative 'view_object'
+
 module ViewObjects
-  class Slate
+  class Slate < ViewObject
     include Dimensions
 
-    attr_reader :x, :y, :slate
-
-    def initialize(x:, y:, slate:)
-      @x = x
-      @y = y
-      @slate = slate
-    end
+    attribute :slate, Types.Instance(::Slate)
 
     def draw
       Gosu.draw_rect(
@@ -21,7 +17,7 @@ module ViewObjects
         Colors::BIOME_COLOR[slate.biome]
       )
       slate.contents.each do |content|
-        Object.const_get("ViewObjects::#{content.class}").new(x: x, y: y, content: content).draw
+        Object.const_get("ViewObjects::#{content.class}").new(x: x, y: y, content.type.to_sym => content).draw
       end
     end
   end

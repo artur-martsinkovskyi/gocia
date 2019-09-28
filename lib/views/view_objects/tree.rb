@@ -1,20 +1,16 @@
 # frozen_string_literal: true
 
+require_relative 'view_object'
+
 module ViewObjects
-  class Tree
+  class Tree < ViewObject
     include Dimensions
 
-    attr_reader :x, :y, :tree
-
-    def initialize(x:, y:, content:)
-      @x = x
-      @y = y
-      @tree = content
-    end
+    attribute :tree, Types.Instance(::Tree)
 
     def draw
       draw_base
-      draw_fruit
+      draw_fruit if tree.fruit
     end
 
     private

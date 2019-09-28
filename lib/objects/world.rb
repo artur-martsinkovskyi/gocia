@@ -2,7 +2,7 @@
 
 require 'singleton'
 
-class World < GameObject
+class World
   include Dimensions
   include Singleton
 
@@ -19,13 +19,5 @@ class World < GameObject
 
   def step_back
     actors.each(&:step_back)
-  end
-
-  private
-
-  def to_h
-    super.merge(
-      slates: slates
-    )
   end
 end

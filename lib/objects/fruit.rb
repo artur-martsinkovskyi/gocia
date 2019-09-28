@@ -3,12 +3,10 @@
 require_relative 'game_object'
 
 class Fruit < GameObject
-  def initialize
-    @poisonous = rand < 0.1
-  end
+  option(:poisonous, Types::Bool, default: proc { rand < 0.1 })
 
   def poisonous?
-    @poisonous
+    poisonous
   end
 
   def to_h

@@ -4,6 +4,7 @@ module Terrain
   module BiomePicker
     include Biomes
 
+    # rubocop:disable Metrics/MethodLength
     def self.call(elevation, moist)
       case elevation
       when 0.95..1
@@ -32,5 +33,6 @@ module Terrain
         DEEP_WATER
       end
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

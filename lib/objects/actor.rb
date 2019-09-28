@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 require_relative 'game_object'
+require_relative 'world'
+require_relative 'slate'
 require_relative 'concerns/querying'
+Dir[File.join(File.dirname(__FILE__), 'actors/*.rb')].each { |f| require f }
 
 class Actor < GameObject
   include Querying
 
-  attr_reader :world
-  attr_reader :slate
-  attr_accessor :health
+  option :world, Types.Instance(World)
+  option :slate, Types.Instance(Slate)
+  option(:stats, Types.Instance(Actors::Stats), default: proc { Actors::Stats.new })
 
-  def initialize(world, slate)
-    @world = world
-    @slate = slate
-    @health = 10
-  end
+  attr_writer :slate
 
   def step
     command_emitter.emit
@@ -28,26 +27,15 @@ class Actor < GameObject
     slate.contents.delete(self)
     to.contents.add(self)
     self.slate = to
-    self.health -= 1
-  end
-
-  def consume(_)
-    self.health += 2 if health <= 8
-  end
-
-  def deconsume(_)
-    self.health -= 2 if self.health >= 2
   end
 
   def to_h
     super.merge(
-      health: health
+      stats: stats.info
     )
   end
 
   private
-
-  attr_writer :slate
 
   def command_emitter
     @command_emitter ||= AI::CommandEmitter.new(self)

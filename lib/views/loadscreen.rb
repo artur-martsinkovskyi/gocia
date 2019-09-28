@@ -34,14 +34,7 @@ by ARTUR MARTSINKOVSKYI
       SecureRandom.alphanumeric(50),
       100,
       font: VT323_REGULAR
-    ).draw(
-      0,
-      HEIGHT - 200,
-      0,
-      1,
-      1,
-      Gosu::Color::BLACK
-    )
+    ).draw(0, HEIGHT - 200, 0, 1, 1, Gosu::Color::BLACK)
   end
 
   def angle

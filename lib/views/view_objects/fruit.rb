@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
+require_relative 'view_object'
+
 module ViewObjects
-  class Fruit
+  class Fruit < ViewObject
     include Dimensions
 
-    attr_reader :x, :y, :fruit
-
-    def initialize(x:, y:, fruit:)
-      @x = x
-      @y = y
-      @fruit = fruit
-    end
+    attribute :fruit, Types.Instance(::Fruit)
 
     def draw
       return unless fruit

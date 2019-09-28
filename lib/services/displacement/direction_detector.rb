@@ -31,35 +31,33 @@ module Displacement
     end
 
     def call
-      return SAME if slate1.x == slate2.x && slate1.y == slate2.y
+      return SAME if same?
 
-      if slate1.x == slate2.x
-        if slate1.y > slate2.y
-          SOUTH
-        else
-          NORTH
-        end
-      elsif slate1.y == slate2.y
-        if slate1.x > slate2.x
-          EAST
-        else
-          WEST
-        end
-      else
-        if slate1.x > slate2.x
-          if slate1.y > slate2.y
-            SOUTH_EAST
-          else
-            SOUTH_WEST
-          end
-        else
-          if slate1.y < slate2.y
-            NORTH_EAST
-          else
-            NORTH_WEST
-          end
-        end
-      end
+      return (slate1.y > slate2.y ? EAST : WEST) if same_by_x?
+
+      return (slate1.x > slate2.x ? SOUTH : NORTH) if same_by_y?
+
+      return (slate1.y > slate2.y ? SOUTH_EAST : SOUTH_WEST) if down_by_x?
+
+      slate1.y < slate2.y ? NORTH_EAST : NORTH_WEST
+    end
+
+    private
+
+    def same?
+      same_by_x? && same_by_y?
+    end
+
+    def same_by_x?
+      slate1.x == slate2.x
+    end
+
+    def same_by_y?
+      slate1.y == slate2.y
+    end
+
+    def down_by_x?
+      slate1.x > slate2.x
     end
   end
 end

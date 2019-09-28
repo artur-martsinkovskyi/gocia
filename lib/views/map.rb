@@ -18,12 +18,12 @@ class Map
       @current_map_x_offset += VIEWPORT_SIZE
       @map_changed = true
     elsif direction == :left
-      return if @current_map_x_offset - VIEWPORT_SIZE < 0
+      return if (@current_map_x_offset - VIEWPORT_SIZE).negative?
 
       @current_map_x_offset -= VIEWPORT_SIZE
       @map_changed = true
     elsif direction == :up
-      return if @current_map_y_offset - VIEWPORT_SIZE < 0
+      return if (@current_map_y_offset - VIEWPORT_SIZE).negative?
 
       @current_map_y_offset -= VIEWPORT_SIZE
       @map_changed = true

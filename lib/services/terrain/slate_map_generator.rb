@@ -14,11 +14,11 @@ module Terrain
       heights.map.with_index do |row, i|
         row.map.with_index do |height_value, j|
           Slate.new(
-            @world,
-            i,
-            j,
-            height_value,
-            moists[i][j]
+            world: @world,
+            x: i,
+            y: j,
+            height: height_value,
+            moist: moists[i][j]
           )
         end
       end

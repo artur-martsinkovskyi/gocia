@@ -11,10 +11,19 @@ Naming/UncommunicativeMethodParamName:
   Enabled: false
 
 Metrics/MethodLength:
-  Max: 15
+  Max: 20
 
 Metrics/LineLength:
   Max: 120
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+Metrics/PerceivedComplexity:
+  Max: 10
 
 RSpec/VerifiedDoubles:
   Enabled: false

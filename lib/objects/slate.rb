@@ -3,15 +3,11 @@
 require 'set'
 
 class Slate < GameObject
-  attr_reader :x, :y, :height, :moist
-
-  def initialize(world, x, y, height = 0, moist = 0)
-    @world = world
-    @x = x
-    @y = y
-    @height = height
-    @moist = moist
-  end
+  option :x, Types::Integer
+  option :y, Types::Integer
+  option :world, Types.Instance(World)
+  option :height, Types::Coercible::Float, default: proc { 0 }
+  option :moist, Types::Coercible::Float, default: proc { 0 }
 
   def biome
     @biome ||= Terrain::BiomePicker.call(height, moist)
@@ -26,21 +22,6 @@ class Slate < GameObject
     end.flatten
   end
 
-  def to_h
-    super.merge(
-      x: x,
-      y: y,
-      height: height,
-      moist: moist,
-      biome: biome.to_h.compact,
-      contents: contents.map(&:to_h)
-    )
-  end
-
-  def inspect
-    to_h.slice(:x, :y, :height, :moist, :biome)
-  end
-
   def contents
     @contents ||= begin
                     result = Set.new
@@ -49,7 +30,6 @@ class Slate < GameObject
                     j = y
 
                     if r_value
-
                       r_field_max_value = world.slates[(i - r_value)...(i + r_value)].map do |r|
                         r[(j - r_value)...(j + r_value)]
                       end.flatten.map(&:height).max
@@ -61,7 +41,14 @@ class Slate < GameObject
                   end
   end
 
-  private
-
-  attr_reader :world
+  def to_h
+    super.merge(
+      x: x,
+      y: y,
+      height: height,
+      moist: moist,
+      biome: biome.to_h.slice(:name),
+      contents: contents.map(&:to_h)
+    )
+  end
 end

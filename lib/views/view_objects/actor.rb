@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
+require_relative 'view_object'
+
 module ViewObjects
-  class Actor
+  class Actor < ViewObject
     include Dimensions
 
-    attr_reader :x, :y, :actor
-
-    def initialize(x:, y:, content:)
-      @x = x
-      @y = y
-      @actor = content
-    end
+    attribute :actor, Types.Instance(::Actor)
 
     def draw
       Gosu.draw_rect(
