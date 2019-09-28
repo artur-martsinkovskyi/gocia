@@ -61,9 +61,7 @@ describe Ostructify do
     it_behaves_like 'to_ostruct'
 
     it 'returns deeply frozen ostruct' do
-      expect(ostructed_hash).to be_frozen
-      expect(ostructed_hash.a).to be_frozen
-      expect(ostructed_hash.a.b).to be_frozen
+      expect([ostructed_hash, ostructed_hash.a, ostructed_hash.b]).to be_all(&:frozen?)
     end
   end
 end

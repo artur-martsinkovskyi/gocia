@@ -2,7 +2,9 @@
 
 require 'dry-struct'
 
-class ViewObject < Dry::Struct
-  attribute :x, Types::Integer
-  attribute :y, Types::Integer
+module ViewObjects
+  class ViewObject < Dry::Struct
+    attribute :x, Types::Integer
+    attribute :y, Types::Integer
+  end
 end

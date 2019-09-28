@@ -3,6 +3,7 @@
 class Position
   attr_reader :rel_x, :rel_y
 
+  # rubocop:disable Metrics/ParameterLists
   def initialize(
     step_x:,
     step_y: step_x,
@@ -22,6 +23,7 @@ class Position
     @step_x = step_x
     @step_y = step_y
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def absolute_position
     [@abs_x, @abs_y]

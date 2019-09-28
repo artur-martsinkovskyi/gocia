@@ -45,7 +45,7 @@ describe Slate do
 
       context 'when slate is not the high point' do
         before do
-          allow(world).to receive_message_chain(:slates, :"[]").and_return([])
+          allow(world).to receive(:slates).and_return(double("[]": []))
         end
 
         it 'does not have a tree in the content' do
@@ -55,7 +55,7 @@ describe Slate do
 
       context 'when slate is a high point' do
         before do
-          allow(world).to receive_message_chain(:slates, :"[]").and_return([double('[]': slate)])
+          allow(world).to receive(:slates).and_return(double("[]": [double('[]': slate)]))
         end
 
         it 'does not have a tree in the content' do
