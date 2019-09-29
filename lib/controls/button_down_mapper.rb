@@ -19,8 +19,6 @@ module Controls
           context.mouse_x,
           context.mouse_y
         )
-      else
-        empty_command.call
       end
     end
 
@@ -36,10 +34,6 @@ module Controls
 
     def mouse_move_cursor_command
       @mouse_move_cursor_command ||= MouseMoveCursorCommand.new(context.cursor)
-    end
-
-    def empty_command
-      @empty_command ||= -> {}
     end
   end
 end

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-require 'dry-types'
 require 'dry-initializer'
+require 'memoist'
 
 class GameObject
   extend Dry::Initializer
+  extend Memoist
 
   def to_h
     {

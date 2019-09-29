@@ -14,8 +14,6 @@ module Controls
         move_cursor_command.call(signal)
       when Gosu::KB_W, Gosu::KB_S, Gosu::KB_A, Gosu::KB_D
         move_map_command.call(signal)
-      else
-        empty_command.call
       end
     end
 
@@ -27,10 +25,6 @@ module Controls
 
     def move_map_command
       @move_map_command ||= MoveMapCommand.new(context.map)
-    end
-
-    def empty_command
-      @empty_command ||= -> {}
     end
   end
 end

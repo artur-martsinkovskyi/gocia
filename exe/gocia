@@ -4,7 +4,6 @@
 require 'require_all'
 
 require 'gosu'
-require 'yaml'
 require 'pry'
 require_relative '../lib/gocia'
 

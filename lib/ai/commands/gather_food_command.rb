@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require_relative '../../rules/slates'
+
 module AI
   class GatherFoodCommand
     attr_reader :actor, :metadata
+
+    include Rules::Slates
 
     def initialize(actor, metadata = {})
       @actor = actor
@@ -10,20 +14,18 @@ module AI
     end
 
     def call
-      food_slate = surrounding_slates.detect do |slate|
-        slate.contents.any? do |content|
-          content.is_a?(Tree) && content.fruit
-        end
+      food_slate = surrounding_slates.find do |slate|
+        slate.contents.any?(&satisfies?(IsTreeWithFruit))
       end
 
       return unless food_slate
 
-      @tree = food_slate.contents.detect do |content|
-        content.is_a?(Tree) && content.fruit
-      end
+      @tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
 
       @fruit = @tree.fruit
       @tree.fruit = nil
+      @command = ConsumeFoodCommand.new(@actor, food: @fruit)
+      @command.call
     end
 
     def redo
@@ -33,6 +35,7 @@ module AI
     def undo
       return unless @tree
 
+      @command.undo
       @tree.fruit = @fruit
     end
 

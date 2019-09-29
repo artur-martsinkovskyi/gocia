@@ -2,6 +2,7 @@
 
 require_relative 'util/ostructify'
 require_relative 'util/types'
+require 'yaml'
 
 module Gocia
   APPLICATION_NAME = 'Socia'

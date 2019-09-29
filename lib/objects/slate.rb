@@ -9,8 +9,8 @@ class Slate < GameObject
   option :height, Types::Coercible::Float, default: proc { 0 }
   option :moist, Types::Coercible::Float, default: proc { 0 }
 
-  def biome
-    @biome ||= Terrain::BiomePicker.call(height, moist)
+  memoize def biome
+    Terrain::BiomePicker.call(height, moist)
   end
 
   def surrounding_slates(distance = 1)
@@ -22,23 +22,21 @@ class Slate < GameObject
     end.flatten
   end
 
-  def contents
-    @contents ||= begin
-                    result = Set.new
-                    r_value = biome.r_value
-                    i = x
-                    j = y
+  memoize def contents
+    result = Set.new
+    r_value = biome.r_value
+    i = x
+    j = y
 
-                    if r_value
-                      r_field_max_value = world.slates[(i - r_value)...(i + r_value)].map do |r|
-                        r[(j - r_value)...(j + r_value)]
-                      end.flatten.map(&:height).max
+    if r_value
+      r_field_max_value = world.slates[(i - r_value)...(i + r_value)].map do |r|
+        r[(j - r_value)...(j + r_value)]
+      end.flatten.map(&:height).max
 
-                      result.add(Tree.new) if r_field_max_value == height
-                    end
+      result.add(Tree.new) if r_field_max_value == height
+    end
 
-                    result
-                  end
+    result
   end
 
   def to_h

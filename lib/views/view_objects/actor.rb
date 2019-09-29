@@ -14,7 +14,7 @@ module ViewObjects
         TILE_SIZE * y + (TILE_SIZE / 2),
         TILE_SIZE / 2,
         TILE_SIZE / 2,
-        Gosu::Color::FUCHSIA
+        actor.stats.alive ? Gosu::Color::FUCHSIA : Gosu::Color::BLACK
       )
     end
   end

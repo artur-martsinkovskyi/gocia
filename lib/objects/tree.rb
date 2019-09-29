@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'game_object'
+require_relative 'fruit'
 
 class Tree < GameObject
   option(:fruit, Types.Instance(Fruit).optional, default: proc { Fruit.new if rand > 0.5 })

@@ -9,10 +9,16 @@ module AI
     end
 
     def step
-      CompoundCommand.new(
-        MoveCommand.new(actor, metadata),
-        GatherFoodCommand.new(actor, metadata)
-      )
+      if !actor.stats.alive
+        EmptyCommand.new(actor, metadata)
+      elsif actor.stats.health.value == actor.stats.health.lower_bound
+        DieCommand.new(actor, metadata)
+      else
+        CompoundCommand.new(
+          MoveCommand.new(actor, metadata),
+          GatherFoodCommand.new(actor, metadata)
+        )
+      end
     end
 
     def metadata
