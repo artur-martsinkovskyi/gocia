@@ -23,14 +23,6 @@ class Actor < GameObject
     command_emitter.absorb
   end
 
-  def move(to:)
-    slate.contents.delete(self)
-    to.contents.add(self)
-    stats.hunger.inc
-    stats.health.dec if stats.hunger.value == stats.hunger.upper_bound
-    self.slate = to
-  end
-
   def to_h
     super.merge(
       stats: stats.to_h

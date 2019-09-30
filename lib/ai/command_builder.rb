@@ -27,10 +27,6 @@ module AI
 
     private
 
-    def commands
-      emitter.commands
-    end
-
     def actor
       emitter.actor
     end

@@ -3,42 +3,58 @@
 module AI
   class CommandEmitter
     COMMANDS_LIMIT = 150
+    class CommandItem
+      attr_reader :command, :tick
 
-    attr_reader :actor, :commands
+      def initialize(command:, tick:)
+        @command = command
+        @tick = tick
+      end
+
+      def <=>(other)
+        tick <=> other.tick
+      end
+    end
+
+    attr_reader :actor, :command_items
 
     def initialize(actor)
       @actor = actor
-      @commands = []
-      @current_command_pos = 0
+      @command_items = SortedSet.new
     end
 
     def emit
-      result = if @current_command_pos == commands.size
-                 if commands.size > COMMANDS_LIMIT
-                   commands.shift
-                   @current_command_pos -= 1
-                 end
-                 command = command_builder.step
-                 commands.push(command)
-                 command
-               else
-                 commands[@current_command_pos]
-               end
-      @current_command_pos += 1
-      result.call
+      if pending_command_item
+        pending_command_item.command.call
+      else
+        command = command_builder.step
+        command_items.add(CommandItem.new(tick: current_tick, command: command))
+        command.call
+      end
     end
 
     def absorb
-      return if @current_command_pos.zero?
+      return unless pending_command_item
 
-      @current_command_pos -= 1
-      commands[@current_command_pos].undo
+      pending_command_item.command.undo
     end
 
     private
 
     def command_builder
       @command_builder ||= CommandBuilder.new(self)
+    end
+
+    def world
+      actor.world
+    end
+
+    def current_tick
+      world.tick
+    end
+
+    def pending_command_item
+      command_items.find { |ci| ci.tick == current_tick }
     end
   end
 end

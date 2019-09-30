@@ -4,8 +4,8 @@ module AI
   class ConsumeFoodCommand < Command
     def call
       @food = metadata.delete(:food)
-      @previous_hunger = actor.stats.hunger
-      @previous_health = actor.stats.health
+      @previous_hunger = actor.stats.hunger.value
+      @previous_health = actor.stats.health.value
 
       if @food.poisonous?
         actor.stats.hunger.inc
@@ -18,8 +18,8 @@ module AI
 
     def undo
       metadata[:food] = @food
-      actor.stats.hunger.set(@previous_hunger.value)
-      actor.stats.health.set(@previous_health.value)
+      actor.stats.hunger.set(@previous_hunger)
+      actor.stats.health.set(@previous_health)
     end
   end
 end
