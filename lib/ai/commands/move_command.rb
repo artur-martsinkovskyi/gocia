@@ -3,23 +3,14 @@
 require_relative '../../constants/dimensions'
 
 module AI
-  class MoveCommand
+  class MoveCommand < Command
     extend Dimensions
-
-    attr_reader :actor, :metadata
-
-    def initialize(actor, metadata = {})
-      @actor = actor
-      @metadata = metadata
-    end
-
     def call
       unless @next_slate
         @previous_slate = actor.slate
         @next_slate = pick_slate
       end
       actor.move(to: @next_slate)
-      actor
     end
 
     def redo
@@ -28,7 +19,6 @@ module AI
 
     def undo
       actor.move(to: @previous_slate)
-      actor
     end
 
     private

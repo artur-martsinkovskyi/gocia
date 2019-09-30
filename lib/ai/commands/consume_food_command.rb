@@ -1,14 +1,7 @@
 # frozen_string_literal: true
 
 module AI
-  class ConsumeFoodCommand
-    attr_reader :actor, :metadata
-
-    def initialize(actor, metadata = {})
-      @actor = actor
-      @metadata = metadata
-    end
-
+  class ConsumeFoodCommand < Command
     def call
       @food = metadata.delete(:food)
       @previous_hunger = actor.stats.hunger
@@ -23,14 +16,10 @@ module AI
       end
     end
 
-    def redo
-      call
-    end
-
     def undo
       metadata[:food] = @food
-      @actor.stats.hunger.set(@previous_hunger.value)
-      @actor.stats.health.set(@previous_health.value)
+      actor.stats.hunger.set(@previous_hunger.value)
+      actor.stats.health.set(@previous_health.value)
     end
   end
 end

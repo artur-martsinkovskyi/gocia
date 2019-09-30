@@ -1,16 +1,9 @@
 # frozen_string_literal: true
 
 module AI
-  class DieCommand
-    attr_reader :actor, :metadata
-
-    def initialize(actor, metadata = {})
-      @actor = actor
-      @metadata = metadata
-    end
-
+  class DieCommand < Command
     def call
-      @actor.stats.alive = false
+      actor.stats.alive = false
     end
 
     def redo
@@ -18,7 +11,7 @@ module AI
     end
 
     def undo
-      @actor.stats.alive = true
+      actor.stats.alive = true
     end
   end
 end

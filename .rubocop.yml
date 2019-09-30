@@ -10,6 +10,9 @@ Metrics/BlockLength:
 Naming/UncommunicativeMethodParamName:
   Enabled: false
 
+Naming/ConstantName:
+  Enabled: false
+
 Metrics/MethodLength:
   Max: 20
 
