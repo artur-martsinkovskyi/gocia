@@ -28,5 +28,16 @@ module Actors
         alive: alive
       }
     end
+
+    def attributes
+      super.merge(
+        hunger: {
+          value: hunger.value
+        },
+        health: {
+          value: health.value
+        }
+      )
+    end
   end
 end

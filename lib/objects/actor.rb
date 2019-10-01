@@ -12,7 +12,6 @@ class Actor < GameObject
   option :world, Types.Instance(World)
   option :slate, Types.Instance(Slate)
   option(:stats, Types.Instance(Actors::Stats), default: proc { Actors::Stats.new })
-
   attr_writer :slate
 
   def step

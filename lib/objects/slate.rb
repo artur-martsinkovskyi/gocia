@@ -49,4 +49,10 @@ class Slate < GameObject
       contents: contents.map(&:to_h)
     )
   end
+
+  def attributes
+    super.merge(
+      contents: contents
+    )
+  end
 end
