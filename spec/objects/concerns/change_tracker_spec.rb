@@ -4,26 +4,40 @@ require 'dry-initializer'
 require 'dry-types'
 
 describe ChangeTracker do
-  class DummyGameObject
+  class OtherDummyGameObject
     extend Dry::Initializer
     include ChangeTracker
 
     param :name, Types::String
     param :id, Types::Integer
+    param :ids, Types::Array.of(Types::Integer)
     attr_writer :name, :id
-
-    private
-
-    def current_tick
-      1
-    end
 
     def deep_attributes
       self.class.dry_initializer.attributes(self)
     end
   end
 
-  let(:tracked_dummy) { DummyGameObject.new('Jerald', 25) }
+  class DummyGameObject
+    extend Dry::Initializer
+    include ChangeTracker
+
+    param :name, Types::String
+    param :id, Types::Integer
+    param :inner, Types.Instance(OtherDummyGameObject)
+    attr_writer :name, :id
+
+
+    def deep_attributes
+      self.class.dry_initializer.attributes(self).merge(inner: inner.deep_attributes)
+    end
+
+    def current_tick
+      1
+    end
+  end
+
+  let(:tracked_dummy) { DummyGameObject.new('Jerald', 25, OtherDummyGameObject.new('Hello', 12, [1])) }
 
   describe '#update' do
     subject do
@@ -43,9 +57,17 @@ describe ChangeTracker do
       tracked_dummy.update do |dummy|
         dummy.name = 'Ford'
         dummy.id = 85
+        dummy.inner.id = 5
+        dummy.inner.ids << tracked_dummy
       end
     end
 
     it { is_expected.to have_attributes(name: 'Jerald', id: 25) }
+
+    it 'rolls back inner object' do
+      expect(tracked_dummy.inner.id).to eq(5)
+      subject
+      expect(tracked_dummy.inner.id).to eq(12)
+    end
   end
 end
