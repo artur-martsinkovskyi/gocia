@@ -6,7 +6,6 @@ require_relative 'slate'
 Dir[File.join(File.dirname(__FILE__), 'actors/*.rb')].each { |f| require f }
 
 class Actor < GameObject
-  option :world, Types.Instance(World)
   option :slate_id, Types::Integer
   option(:stats, Types.Instance(Actors::Stats), default: proc { Actors::Stats.new })
 

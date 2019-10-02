@@ -7,6 +7,7 @@ require_relative 'concerns/change_tracker'
 class GameObject
   extend Dry::Initializer
   extend Memoist
+  include ChangeTracker
 
   def initialize(*)
     self.class.object_pool[object_id] = self
@@ -35,6 +36,10 @@ class GameObject
         [key, value]
       end
     end.to_h
+  end
+
+  def tick
+    $world.tick
   end
 
   def attributes

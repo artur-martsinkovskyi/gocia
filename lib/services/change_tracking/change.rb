@@ -7,7 +7,17 @@ module ChangeTracking
   class Change
     extend Dry::Initializer
 
-    option :change_type, Types::String.enum('~', '+', '-')
+    ADD = "+"
+    DELETE = "-"
+    ALTER = "~"
+
+    CHANGE_TYPES = [
+      ADD,
+      ALTER,
+      DELETE
+    ].freeze
+
+    option :change_type, Types::String.enum(*CHANGE_TYPES)
     option :field, Types::String
     option :from, Types::Any
     option :to, Types::Any
@@ -21,7 +31,7 @@ module ChangeTracking
     end
 
     def accessor
-      "#{field.split('.')[-1]}="
+      field.split('.')[-1]
     end
   end
 end

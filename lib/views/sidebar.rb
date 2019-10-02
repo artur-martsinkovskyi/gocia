@@ -46,10 +46,10 @@ class Sidebar
 
   def draw_info
     Gosu::Image.from_text(
-      %Q{
+      %(
         Current tick: #{window.world_engine.world.tick}
         #{info}
-      },
+      ),
       70,
       font: ARCHIVO_NARROW_REGULAR
     ).draw(

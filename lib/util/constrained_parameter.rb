@@ -26,7 +26,5 @@ class ConstrainedParameter
     self.value = value
   end
 
-  private
-
   attr_writer :value
 end

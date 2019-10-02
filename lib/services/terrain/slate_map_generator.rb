@@ -14,7 +14,6 @@ module Terrain
       heights.map.with_index do |row, i|
         row.map.with_index do |height_value, j|
           Slate.new(
-            world: @world,
             x: i,
             y: j,
             height: height_value,

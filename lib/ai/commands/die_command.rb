@@ -3,7 +3,9 @@
 module AI
   class DieCommand < Command
     def call
-      actor.stats.alive = false
+      actor.update do |actor|
+        actor.stats.alive = false
+      end
     end
 
     def redo
@@ -11,7 +13,7 @@ module AI
     end
 
     def undo
-      actor.stats.alive = true
+      actor.rollback
     end
   end
 end

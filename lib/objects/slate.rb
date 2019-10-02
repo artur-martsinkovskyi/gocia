@@ -5,7 +5,6 @@ require_relative 'slates/contents'
 class Slate < GameObject
   option :x, Types::Integer
   option :y, Types::Integer
-  option :world, Types.Instance(World)
   option :height, Types::Coercible::Float, default: proc { 0 }
   option :moist, Types::Coercible::Float, default: proc { 0 }
 
@@ -17,7 +16,7 @@ class Slate < GameObject
     left_limit = [0, x - distance].max
     top_limit  = [0, y - distance].max
 
-    world.slates[left_limit..(x + distance)].map do |r|
+    $world.slates[left_limit..(x + distance)].map do |r|
       r[top_limit..(y + distance)]
     end.flatten
   end
@@ -29,7 +28,7 @@ class Slate < GameObject
     j = y
 
     if r_value
-      r_field_max_value = world.slates[(i - r_value)...(i + r_value)].map do |r|
+      r_field_max_value = $world.slates[(i - r_value)...(i + r_value)].map do |r|
         r[(j - r_value)...(j + r_value)]
       end.flatten.map(&:height).max
 

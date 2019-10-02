@@ -45,12 +45,8 @@ module AI
       @command_builder ||= CommandBuilder.new(self)
     end
 
-    def world
-      actor.world
-    end
-
     def current_tick
-      world.tick
+      $world.tick
     end
 
     def pending_command_item

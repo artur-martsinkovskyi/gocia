@@ -27,12 +27,11 @@ describe ChangeTracker do
     param :inner, Types.Instance(OtherDummyGameObject)
     attr_writer :name, :id
 
-
     def deep_attributes
       self.class.dry_initializer.attributes(self).merge(inner: inner.deep_attributes)
     end
 
-    def current_tick
+    def tick
       1
     end
   end
@@ -66,8 +65,34 @@ describe ChangeTracker do
 
     it 'rolls back inner object' do
       expect(tracked_dummy.inner.id).to eq(5)
+      expect(tracked_dummy.inner.ids).to include(tracked_dummy)
       subject
       expect(tracked_dummy.inner.id).to eq(12)
+      expect(tracked_dummy.inner.ids).not_to include(tracked_dummy)
+    end
+  end
+
+  describe '#rollup' do
+    subject { tracked_dummy.rollup }
+
+    before do
+      tracked_dummy.update do |dummy|
+        dummy.name = 'Ford'
+        dummy.id = 85
+        dummy.inner.id = 5
+        dummy.inner.ids << tracked_dummy
+      end
+      tracked_dummy.rollback
+    end
+
+    it { is_expected.to have_attributes(name: 'Ford', id: 85) }
+
+    it 'rolls up inner object' do
+      expect(tracked_dummy.inner.id).to eq(12)
+      expect(tracked_dummy.inner.ids).not_to include(tracked_dummy)
+      subject
+      expect(tracked_dummy.inner.id).to eq(5)
+      expect(tracked_dummy.inner.ids).to include(tracked_dummy)
     end
   end
 end

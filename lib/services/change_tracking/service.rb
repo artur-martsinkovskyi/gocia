@@ -18,7 +18,7 @@ module ChangeTracking
     def update
       old_attributes = Marshal.load(
         Marshal.dump(
-          object.deep_attributes
+        object.deep_attributes
         )
       )
       yield object
@@ -33,7 +33,7 @@ module ChangeTracking
         )
       end
       changesets << Changeset.new(
-        tick: object.current_tick,
+        tick: object.tick,
         changes: changes
       )
       self.current_change_pointer += 1
@@ -48,9 +48,8 @@ module ChangeTracking
                            end
       relevant_changesets = changesets[new_change_pointer..current_change_pointer]
       relevant_changesets.each do |changeset|
-        changeset.changes.reject { |change| change.change_type == '+' }.each do |change|
-          receiver = object.instance_eval(change.object_path)
-          receiver.send(change.accessor, change.from)
+        changeset.changes.each do |change|
+          ChangeProcessor.call(object, change, direction: :rollback)
         end
       end
       self.current_change_pointer = new_change_pointer
@@ -58,16 +57,15 @@ module ChangeTracking
     end
 
     def rollup(by: changes.size - current_change_pointer)
-      new_change_pointer = if (current_change_pointer + by) > changes.size
-                             changes.size
+      new_change_pointer = if (current_change_pointer + by) > changesets.size
+                             changesets.size
                            else
                              current_change_pointer + by
                            end
-      changesets = changes[current_change_pointer..new_change_pointer]
-      changesets.each do |changeset|
-        changeset.changes.reject { |change| change.change_type == '+' }.each do |change|
-          receiver = object.instance_eval(change.object_path)
-          receiver.send(change.accessor, change.from)
+      relevant_changesets = changesets[current_change_pointer..new_change_pointer]
+      relevant_changesets.each do |changeset|
+        changeset.changes.each do |change|
+          ChangeProcessor.call(object, change, direction: :rollup)
         end
       end
       self.current_change_pointer = new_change_pointer

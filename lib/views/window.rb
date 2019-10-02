@@ -49,6 +49,10 @@ class Window < Gosu::Window
   end
 
   def world_engine
-    @world_engine ||= @initializer.world_engine
+    @world_engine ||= begin
+                        result = @initializer.world_engine
+                        $world = result.world
+                        result
+                      end
   end
 end
