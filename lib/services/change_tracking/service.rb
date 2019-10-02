@@ -18,12 +18,13 @@ module ChangeTracking
     def update
       old_attributes = Marshal.load(
         Marshal.dump(
-        object.deep_attributes
+          object.deep_attributes
         )
       )
       yield object
       new_attributes = object.deep_attributes
       change_attributes = diff(old_attributes, new_attributes)
+      return object unless change_attributes.any?
       changes = change_attributes.map do |change_type, field, from, to|
         Change.new(
           change_type: change_type,

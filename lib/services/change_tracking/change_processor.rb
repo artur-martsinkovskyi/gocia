@@ -33,27 +33,31 @@ module ChangeTracking
     end
 
     def add
-      position = change.accessor.match(/[a-zA-Z0-9]\[(\d*)\]/)[1].to_i
-      array = change.accessor.split('[')[0]
       if direction == :rollback
-        receiver = object.instance_eval(change.object_path.concat(".#{array}"))
+        receiver = object.instance_eval(change.object_path + ".#{array_path}")
         receiver.send('delete_at', position)
       elsif direction == :rollup
-        receiver = object.instance_eval(change.object_path.concat(".#{array}"))
+        receiver = object.instance_eval(change.object_path + ".#{array_path}")
         receiver.send('insert', position, change.to)
       end
     end
 
     def remove
-      position = change.accessor.match(/[a-zA-Z0-9]\[(\d*)\]/)[1].to_i
-      array = change.accessor.split('[')[0]
       if direction == :rollback
-        receiver = object.instance_eval(change.object_path.concat(".#{array}"))
+        receiver = object.instance_eval(change.object_path + ".#{array_path}")
         receiver.send('delete_at', position)
       elsif direction == :rollup
-        receiver = object.instance_eval(change.object_path.concat(".#{array}"))
+        receiver = object.instance_eval(change.object_path + ".#{array_path}")
         receiver.send('insert', position, change.to)
       end
+    end
+
+    def position
+      change.accessor.match(/[a-zA-Z0-9]\[(\d*)\]/)[1].to_i
+    end
+
+    def array_path
+      change.accessor.split('[')[0]
     end
   end
 end

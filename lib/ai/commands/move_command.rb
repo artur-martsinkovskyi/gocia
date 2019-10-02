@@ -10,11 +10,14 @@ module AI
         @previous_slate = actor.slate
         @next_slate = pick_slate
       end
-      @previous_health = actor.stats.health.value
-      @previous_hunger = actor.stats.hunger.value
-      actor.stats.hunger.inc
-      actor.stats.health.dec if actor.stats.hunger.value == actor.stats.hunger.upper_bound
-      move(to: @next_slate)
+      actor.update do |actor|
+        actor.stats.hunger.inc
+        actor.stats.health.dec if actor.stats.hunger.value == actor.stats.hunger.upper_bound
+      end
+      actor.slate.update { |slate| slate.contents.delete(actor) }
+      @next_slate.update { |to| to.contents.push(actor) }
+      actor.update { |actor| actor.slate = @next_slate }
+
     end
 
     def redo
@@ -22,18 +25,12 @@ module AI
     end
 
     def undo
-      move(to: @previous_slate)
-      actor.stats.health.set(@previous_health)
-      actor.stats.hunger.set(@previous_hunger)
+      @next_slate.rollback
+      actor.rollback
+      @previous_slate.rollback
     end
 
     private
-
-    def move(to:)
-      actor.slate.contents.delete(actor)
-      to.contents.push(actor)
-      actor.slate = to
-    end
 
     def pick_slate
       slates = actor.slate.surrounding_slates

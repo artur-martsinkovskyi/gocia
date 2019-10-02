@@ -51,7 +51,7 @@ class Slate < GameObject
 
   def attributes
     super.merge(
-      contents: contents
+      contents: contents.deep_attributes
     )
   end
 end

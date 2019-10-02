@@ -4,4 +4,4 @@ interface:
   viewport_size: 64
 world:
   tile_count: 256
-  actor_count: 300
+  actor_count: 50

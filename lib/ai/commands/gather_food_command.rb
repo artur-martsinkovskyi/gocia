@@ -36,7 +36,6 @@ module AI
       return unless @tree
 
       @command.undo
-      @tree.fruit = @fruit
     end
 
     private

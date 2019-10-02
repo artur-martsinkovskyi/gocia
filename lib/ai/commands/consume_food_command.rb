@@ -18,8 +18,7 @@ module AI
 
     def undo
       metadata[:food] = @food
-      actor.stats.hunger.set(@previous_hunger)
-      actor.stats.health.set(@previous_health)
+      actor.rollback
     end
   end
 end
