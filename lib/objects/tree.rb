@@ -4,9 +4,13 @@ require_relative 'game_object'
 require_relative 'fruit'
 
 class Tree < GameObject
-  option(:fruit, Types.Instance(Fruit).optional, default: proc { Fruit.new if rand > 0.5 })
+  option(:fruit_id, Types::Integer.optional, default: proc { Fruit.new.object_id if rand > 0.5 })
 
-  attr_writer :fruit
+  attr_writer :fruit_id
+
+  def fruit
+    Fruit.object_pool[fruit_id]
+  end
 
   def to_h
     super.merge(

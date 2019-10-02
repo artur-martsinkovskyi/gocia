@@ -3,16 +3,22 @@
 require_relative 'game_object'
 require_relative 'world'
 require_relative 'slate'
-require_relative 'concerns/querying'
 Dir[File.join(File.dirname(__FILE__), 'actors/*.rb')].each { |f| require f }
 
 class Actor < GameObject
-  include Querying
-
   option :world, Types.Instance(World)
-  option :slate, Types.Instance(Slate)
+  option :slate_id, Types::Integer
   option(:stats, Types.Instance(Actors::Stats), default: proc { Actors::Stats.new })
-  attr_writer :slate
+
+  attr_writer :slate_id
+
+  def slate
+    Slate.object_pool[slate_id]
+  end
+
+  def slate=(slate)
+    self.slate_id = slate.object_id
+  end
 
   def step
     command_emitter.emit

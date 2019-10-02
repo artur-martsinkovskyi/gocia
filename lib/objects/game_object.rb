@@ -8,6 +8,15 @@ class GameObject
   extend Dry::Initializer
   extend Memoist
 
+  def initialize(*)
+    self.class.object_pool[object_id] = self
+    super
+  end
+
+  def self.object_pool
+    @object_pool ||= {}
+  end
+
   def to_h
     {
       type: type

@@ -31,7 +31,7 @@ module AI
 
     def move(to:)
       actor.slate.contents.delete(actor)
-      to.contents.add(actor)
+      to.contents.push(actor)
       actor.slate = to
     end
 

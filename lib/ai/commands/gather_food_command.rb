@@ -23,7 +23,7 @@ module AI
       @tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
 
       @fruit = @tree.fruit
-      @tree.fruit = nil
+      @tree.fruit_id = nil
       @command = ConsumeFoodCommand.new(@actor, food: @fruit)
       @command.call
     end

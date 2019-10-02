@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'set'
+require_relative 'slates/contents'
 
 class Slate < GameObject
   option :x, Types::Integer
@@ -23,7 +23,7 @@ class Slate < GameObject
   end
 
   memoize def contents
-    result = Set.new
+    result = Slates::Contents.new
     r_value = biome.r_value
     i = x
     j = y
@@ -33,7 +33,7 @@ class Slate < GameObject
         r[(j - r_value)...(j + r_value)]
       end.flatten.map(&:height).max
 
-      result.add(Tree.new) if r_field_max_value == height
+      result.push(Tree.new) if r_field_max_value == height
     end
 
     result
