@@ -41,6 +41,10 @@ module Slates
       contents
     end
 
+    def self.to_content(obj)
+        [obj.class, obj.object_id]
+    end
+
     private
 
     attr_reader :contents

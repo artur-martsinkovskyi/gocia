@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AI
+module Ai
   class CommandEmitter
     COMMANDS_LIMIT = 150
     class CommandItem

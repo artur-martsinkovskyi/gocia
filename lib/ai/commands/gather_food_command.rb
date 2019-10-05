@@ -1,47 +1,47 @@
 # frozen_string_literal: true
 
-require_relative '../../rules/slates'
+module Ai
+  module Commands
+    class GatherFoodCommand
+      attr_reader :actor, :metadata
 
-module AI
-  class GatherFoodCommand
-    attr_reader :actor, :metadata
+      include SlatesRuleset
 
-    include Rules::Slates
-
-    def initialize(actor, metadata = {})
-      @actor = actor
-      @metadata = metadata
-    end
-
-    def call
-      food_slate = surrounding_slates.find do |slate|
-        slate.contents.any?(&satisfies?(IsTreeWithFruit))
+      def initialize(actor, metadata = {})
+        @actor = actor
+        @metadata = metadata
       end
 
-      return unless food_slate
+      def call
+        food_slate = surrounding_slates.find do |slate|
+          slate.contents.any?(&satisfies?(IsTreeWithFruit))
+        end
 
-      @tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
+        return unless food_slate
 
-      @fruit = @tree.fruit
-      @tree.fruit_id = nil
-      @command = ConsumeFoodCommand.new(@actor, food: @fruit)
-      @command.call
-    end
+        @tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
 
-    def redo
-      call
-    end
+        @fruit = @tree.fruit
+        @tree.fruit_id = nil
+        @command = ConsumeFoodCommand.new(@actor, food: @fruit)
+        @command.call
+      end
 
-    def undo
-      return unless @tree
+      def redo
+        call
+      end
 
-      @command.undo
-    end
+      def undo
+        return unless @tree
 
-    private
+        @command.undo
+      end
 
-    def surrounding_slates
-      actor.slate.surrounding_slates
+      private
+
+      def surrounding_slates
+        actor.slate.surrounding_slates
+      end
     end
   end
 end

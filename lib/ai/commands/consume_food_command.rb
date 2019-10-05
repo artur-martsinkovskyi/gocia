@@ -1,24 +1,28 @@
 # frozen_string_literal: true
 
-module AI
-  class ConsumeFoodCommand < Command
-    def call
-      @food = metadata.delete(:food)
-      @previous_hunger = actor.stats.hunger.value
-      @previous_health = actor.stats.health.value
+module Ai
+  module Commands
+    class ConsumeFoodCommand < Command
+      def call
+        @food = metadata.delete(:food)
+        @previous_hunger = actor.stats.hunger.value
+        @previous_health = actor.stats.health.value
 
-      if @food.poisonous?
-        actor.stats.hunger.inc
-        actor.stats.health.dec(2)
-      else
-        actor.stats.hunger.dec(4)
-        actor.stats.health.inc(2)
+        actor.update do |actor|
+          if @food.poisonous?
+            actor.stats.hunger.inc
+            actor.stats.health.dec(2)
+          else
+            actor.stats.hunger.dec(4)
+            actor.stats.health.inc(2)
+          end
+        end
       end
-    end
 
-    def undo
-      metadata[:food] = @food
-      actor.rollback
+      def undo
+        metadata[:food] = @food
+        actor.rollback
+      end
     end
   end
 end

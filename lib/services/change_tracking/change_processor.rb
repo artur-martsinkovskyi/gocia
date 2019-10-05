@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../service'
-
 module ChangeTracking
   class ChangeProcessor < ::Service
     attr_reader :object, :change, :direction
@@ -38,17 +36,17 @@ module ChangeTracking
         receiver.send('delete_at', position)
       elsif direction == :rollup
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('insert', position, change.to)
+        receiver.send('insert', position, Slates::Contents.to_content(change.from))
       end
     end
 
     def remove
       if direction == :rollback
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('delete_at', position)
+        receiver.send('insert', position, Slates::Contents.to_content(change.from))
       elsif direction == :rollup
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('insert', position, change.to)
+        receiver.send('delete_at', position)
       end
     end
 

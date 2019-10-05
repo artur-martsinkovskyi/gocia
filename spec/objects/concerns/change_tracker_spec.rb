@@ -22,21 +22,18 @@ describe ChangeTracker do
     extend Dry::Initializer
     include ChangeTracker
 
+    param :tick, Types::Integer
     param :name, Types::String
     param :id, Types::Integer
     param :inner, Types.Instance(OtherDummyGameObject)
-    attr_writer :name, :id
+    attr_writer :name, :id, :tick
 
     def deep_attributes
       self.class.dry_initializer.attributes(self).merge(inner: inner.deep_attributes)
     end
-
-    def tick
-      1
-    end
   end
 
-  let(:tracked_dummy) { DummyGameObject.new('Jerald', 25, OtherDummyGameObject.new('Hello', 12, [1])) }
+  let(:tracked_dummy) { DummyGameObject.new(1, 'Jerald', 25, OtherDummyGameObject.new('Hello', 12, [1])) }
 
   describe '#update' do
     subject do
@@ -89,10 +86,10 @@ describe ChangeTracker do
 
     it 'rolls up inner object' do
       expect(tracked_dummy.inner.id).to eq(12)
-      expect(tracked_dummy.inner.ids).not_to include(tracked_dummy)
+      expect(tracked_dummy.inner.ids).not_to include([tracked_dummy.class, tracked_dummy.object_id])
       subject
       expect(tracked_dummy.inner.id).to eq(5)
-      expect(tracked_dummy.inner.ids).to include(tracked_dummy)
+      expect(tracked_dummy.inner.ids).to include([tracked_dummy.class, tracked_dummy.object_id])
     end
   end
 end

@@ -4,7 +4,7 @@ require 'hashdiff'
 
 module ChangeTracking
   class Service
-    attr_reader :object, :current_change_pointer, :changesets
+    attr_reader :object, :current_change_tick, :changesets
 
     def initialize(object)
       @object = object
@@ -22,6 +22,7 @@ module ChangeTracking
       new_attributes = object.deep_attributes
       change_attributes = diff(old_attributes, new_attributes)
       return object unless change_attributes.any?
+
       changes = change_attributes.map do |change_type, field, from, to|
         Change.new(
           change_type: change_type,
@@ -34,45 +35,35 @@ module ChangeTracking
         tick: object.tick,
         changes: changes
       )
-      self.current_change_pointer += 1
+      self.current_change_tick = object.tick
       object
     end
 
     def rollback(by:)
-      new_change_pointer = if (current_change_pointer - by).negative?
-                             0
-                           else
-                             current_change_pointer - by
-                           end
-      relevant_changesets = changesets[new_change_pointer..current_change_pointer]
+      relevant_changesets = changesets.reverse_each.take_while { |changeset| changeset.tick >= by }
       relevant_changesets.each do |changeset|
         changeset.changes.each do |change|
           ChangeProcessor.call(object, change, direction: :rollback)
         end
       end
-      self.current_change_pointer = new_change_pointer
+      self.current_change_tick = relevant_changesets.last.tick
       object
     end
 
-    def rollup(by: changes.size - current_change_pointer)
-      new_change_pointer = if (current_change_pointer + by) > changesets.size
-                             changesets.size
-                           else
-                             current_change_pointer + by
-                           end
-      relevant_changesets = changesets[current_change_pointer..new_change_pointer]
+    def rollup(by:)
+      relevant_changesets = changesets.take_while { |changeset| changeset.tick <= by }
       relevant_changesets.each do |changeset|
         changeset.changes.each do |change|
           ChangeProcessor.call(object, change, direction: :rollup)
         end
       end
-      self.current_change_pointer = new_change_pointer
+      self.current_change_tick = relevant_changesets.last.tick
       object
     end
 
     private
 
-    attr_writer :current_change_pointer
+    attr_writer :current_change_tick
 
     def diff(old, new)
       Hashdiff.diff(old, new)
