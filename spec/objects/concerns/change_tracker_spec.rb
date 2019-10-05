@@ -47,9 +47,10 @@ describe ChangeTracker do
   end
 
   describe '#rollback' do
-    subject { tracked_dummy.rollback }
+    subject { tracked_dummy.rollback(to: 1) }
 
     before do
+      tracked_dummy.tick = 2
       tracked_dummy.update do |dummy|
         dummy.name = 'Ford'
         dummy.id = 85
@@ -70,16 +71,17 @@ describe ChangeTracker do
   end
 
   describe '#rollup' do
-    subject { tracked_dummy.rollup }
+    subject { tracked_dummy.rollup(to: 2) }
 
     before do
+      tracked_dummy.tick = 2
       tracked_dummy.update do |dummy|
         dummy.name = 'Ford'
         dummy.id = 85
         dummy.inner.id = 5
         dummy.inner.ids << tracked_dummy
       end
-      tracked_dummy.rollback
+      tracked_dummy.rollback(to: 1)
     end
 
     it { is_expected.to have_attributes(name: 'Ford', id: 85) }

@@ -5,12 +5,12 @@ module ChangeTracker
     change_tracker.update(&block)
   end
 
-  def rollback(by: 1)
-    change_tracker.rollback(by: by)
+  def rollback(to:)
+    change_tracker.rollback(to: to)
   end
 
-  def rollup(by: 1)
-    change_tracker.rollup(by: by)
+  def rollup(to:)
+    change_tracker.rollup(to: to)
   end
 
   private

@@ -19,10 +19,12 @@ module Ai
 
         return unless food_slate
 
-        @tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
+        food_slate.update do |food_slate|
+          @tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
 
-        @fruit = @tree.fruit
-        @tree.fruit_id = nil
+          @fruit = @tree.fruit
+          @tree.fruit_id = nil
+        end
         @command = ConsumeFoodCommand.new(@actor, food: @fruit)
         @command.call
       end
@@ -35,7 +37,6 @@ module Ai
         return unless @tree
 
         @command.undo
-        @tree.fruit = @fruit
       end
 
       private

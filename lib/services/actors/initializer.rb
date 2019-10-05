@@ -14,6 +14,7 @@ module Actors
       placements.map do |x, y|
         slate = world.slates[x][y]
         actor = Actor.new(slate_id: slate.object_id)
+        slate
         actor
       end
     end

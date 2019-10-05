@@ -20,12 +20,9 @@ class Actor < GameObject
     command_emitter.emit
   end
 
-  def step_back
-    command_emitter.absorb
-  end
-
   def to_h
     super.merge(
+      id: object_id,
       stats: stats.to_h
     )
   end

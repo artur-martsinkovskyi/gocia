@@ -33,25 +33,21 @@ module ChangeTracking
     def add
       if direction == :rollback
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('delete_at', position)
+        receiver.send('delete', Slates::Contents.to_content(change.from))
       elsif direction == :rollup
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('insert', position, Slates::Contents.to_content(change.from))
+        receiver.send('push', Slates::Contents.to_content(change.from))
       end
     end
 
     def remove
       if direction == :rollback
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('insert', position, Slates::Contents.to_content(change.from))
+        receiver.send('push', Slates::Contents.to_content(change.from))
       elsif direction == :rollup
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('delete_at', position)
+        receiver.send('delete', Slates::Contents.to_content(change.from))
       end
-    end
-
-    def position
-      change.accessor.match(/[a-zA-Z0-9]\[(\d*)\]/)[1].to_i
     end
 
     def array_path

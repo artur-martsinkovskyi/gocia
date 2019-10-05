@@ -20,23 +20,15 @@ module Ai
 
     def initialize(actor)
       @actor = actor
-      @command_items = SortedSet.new
+      @command_items = []
     end
 
     def emit
-      if pending_command_item
-        pending_command_item.command.call
-      else
+      if command_items.empty? || command_items.last.tick < current_tick
         command = command_builder.step
-        command_items.add(CommandItem.new(tick: current_tick, command: command))
+        command_items.push(CommandItem.new(tick: current_tick, command: command))
         command.call
       end
-    end
-
-    def absorb
-      return unless pending_command_item
-
-      pending_command_item.command.undo
     end
 
     private
@@ -45,16 +37,8 @@ module Ai
       @command_builder ||= CommandBuilder.new(self)
     end
 
-    def world
-      actor.world
-    end
-
     def current_tick
-      world.tick
-    end
-
-    def pending_command_item
-      command_items.find { |ci| ci.tick == current_tick }
+      $world.tick
     end
   end
 end

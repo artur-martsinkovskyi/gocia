@@ -8,7 +8,6 @@ module ChangeTracking
 
     def initialize(object)
       @object = object
-      @current_change_pointer = 0
       @changesets = []
     end
 
@@ -39,25 +38,25 @@ module ChangeTracking
       object
     end
 
-    def rollback(by:)
-      relevant_changesets = changesets.reverse_each.take_while { |changeset| changeset.tick >= by }
+    def rollback(to:)
+      relevant_changesets = changesets.reverse_each.take_while { |changeset| changeset.tick >= to }
       relevant_changesets.each do |changeset|
         changeset.changes.each do |change|
           ChangeProcessor.call(object, change, direction: :rollback)
         end
       end
-      self.current_change_tick = relevant_changesets.last.tick
+      self.current_change_tick = relevant_changesets.last.tick if relevant_changesets.any?
       object
     end
 
-    def rollup(by:)
-      relevant_changesets = changesets.take_while { |changeset| changeset.tick <= by }
+    def rollup(to:)
+      relevant_changesets = changesets.take_while { |changeset| changeset.tick <= to }
       relevant_changesets.each do |changeset|
         changeset.changes.each do |change|
           ChangeProcessor.call(object, change, direction: :rollup)
         end
       end
-      self.current_change_tick = relevant_changesets.last.tick
+      self.current_change_tick = relevant_changesets.last.tick if relevant_changesets.any?
       object
     end
 

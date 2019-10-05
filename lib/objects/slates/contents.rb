@@ -42,7 +42,10 @@ module Slates
     end
 
     def self.to_content(obj)
-        [obj.class, obj.object_id]
+      return obj unless obj.is_a?(Array)
+
+      klass, object_id = obj
+      klass.object_pool[object_id]
     end
 
     private
