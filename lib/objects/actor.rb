@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'game_object'
-require_relative 'world'
-require_relative 'slate'
 Dir[File.join(File.dirname(__FILE__), 'actors/*.rb')].each { |f| require f }
 
 class Actor < GameObject
@@ -36,6 +33,6 @@ class Actor < GameObject
   private
 
   def command_emitter
-    @command_emitter ||= AI::CommandEmitter.new(self)
+    @command_emitter ||= Ai::CommandEmitter.new(self)
   end
 end

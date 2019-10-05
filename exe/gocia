@@ -1,12 +1,20 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'require_all'
-
 require 'gosu'
 require 'pry'
-require_relative '../lib/gocia'
+require 'zeitwerk'
 
-require_rel '../lib'
+loader = Zeitwerk::Loader.new
+loader.push_dir("lib")
+loader.push_dir("lib/constants")
+loader.push_dir("lib/engines")
+loader.push_dir("lib/services")
+loader.push_dir("lib/util")
+loader.push_dir("lib/views")
+loader.push_dir("lib/rules")
+loader.push_dir("lib/objects")
+loader.setup
+loader.eager_load
 
 Window.new.show

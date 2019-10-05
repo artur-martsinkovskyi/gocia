@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'util/ostructify'
-require_relative 'util/types'
 require 'yaml'
 
 module Gocia

@@ -20,11 +20,11 @@ module Controls
     private
 
     def move_cursor_command
-      @move_cursor_command ||= MoveCursorCommand.new(context.cursor)
+      @move_cursor_command ||= Commands::MoveCursorCommand.new(context.cursor)
     end
 
     def move_map_command
-      @move_map_command ||= MoveMapCommand.new(context.map)
+      @move_map_command ||= Commands::MoveMapCommand.new(context.map)
     end
   end
 end

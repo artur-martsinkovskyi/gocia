@@ -15,18 +15,28 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'require_all'
 
 require 'gosu'
 require 'yaml'
 require 'pry'
+require 'zeitwerk'
 
 require 'simplecov'
 SimpleCov.start
 
-require_relative '../lib/gocia'
+loader = Zeitwerk::Loader.new
+loader.push_dir("lib")
+loader.push_dir("lib/constants")
+loader.push_dir("lib/engines")
+loader.push_dir("lib/services")
+loader.push_dir("lib/util")
+loader.push_dir("lib/views")
+loader.push_dir("lib/rules")
+loader.push_dir("lib/objects")
+loader.setup
+loader.eager_load
 
-require_rel '../lib'
+
 require 'rspec-parameterized'
 
 RSpec.configure do |config|

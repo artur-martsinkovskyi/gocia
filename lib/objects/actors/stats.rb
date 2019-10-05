@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../util/constrained_parameter'
-
 module Actors
   class Stats < GameObject
     option(:hunger, Types::Instance(ConstrainedParameter), default: proc do

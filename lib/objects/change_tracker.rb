@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../services/change_tracking/service'
-
 module ChangeTracker
   def update(&block)
     change_tracker.update(&block)

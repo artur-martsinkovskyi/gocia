@@ -25,15 +25,15 @@ module Controls
     private
 
     def sound_command
-      @sound_command ||= SoundCommand.new(context.sound_engine)
+      @sound_command ||= Commands::SoundCommand.new(context.sound_engine)
     end
 
     def close_window_command
-      @close_window_command ||= CloseWindowCommand.new(context)
+      @close_window_command ||= Commands::CloseWindowCommand.new(context)
     end
 
     def mouse_move_cursor_command
-      @mouse_move_cursor_command ||= MouseMoveCursorCommand.new(context.cursor)
+      @mouse_move_cursor_command ||= Commands::MouseMoveCursorCommand.new(context.cursor)
     end
   end
 end

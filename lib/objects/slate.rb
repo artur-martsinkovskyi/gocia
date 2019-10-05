@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'slates/contents'
-
 class Slate < GameObject
   option :x, Types::Integer
   option :y, Types::Integer

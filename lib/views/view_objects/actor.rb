@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'view_object'
-
 module ViewObjects
   class Actor < ViewObject
     include Dimensions

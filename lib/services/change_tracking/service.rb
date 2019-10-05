@@ -2,9 +2,6 @@
 
 require 'hashdiff'
 
-require_relative 'change'
-require_relative 'changeset'
-
 module ChangeTracking
   class Service
     attr_reader :object, :current_change_pointer, :changesets

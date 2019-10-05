@@ -2,7 +2,6 @@
 
 require 'dry-initializer'
 require 'memoist'
-require_relative 'concerns/change_tracker'
 
 class GameObject
   extend Dry::Initializer
