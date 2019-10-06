@@ -18,7 +18,7 @@ class Window < Gosu::Window
     @cursor = Cursor.new
     @sound_engine = SoundEngine.new
     @controls = Controls::Mapper.new(self)
-    @initializer = Initializer.new
+    @initializer = WorldInitializer.new
     @pause = false
   end
 

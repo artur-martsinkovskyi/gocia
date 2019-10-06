@@ -3,7 +3,7 @@
 require 'dry-struct'
 require 'memoist'
 
-class Service < Dry::Struct
+class Operation < Dry::Struct
   extend Memoist
 
   def self.call(*args)

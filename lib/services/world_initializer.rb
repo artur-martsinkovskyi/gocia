@@ -2,7 +2,7 @@
 
 require 'concurrent'
 
-class Initializer < Service
+class WorldInitializer < Operation
   def ready?
     if initialization.fulfilled?
       true

@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'dry-initializer'
-require 'dry-types'
-
 describe ChangeTracker do
   class OtherDummyGameObject
     extend Dry::Initializer

@@ -1,24 +1,15 @@
 # frozen_string_literal: true
 
-require 'dry-initializer'
-require 'memoist'
-
 class GameObject
   extend Dry::Initializer
   extend Memoist
+
   include ChangeTracker
-
-  def initialize(*)
-    self.class.object_pool[object_id] = self
-    super
-  end
-
-  def self.object_pool
-    @object_pool ||= {}
-  end
+  include ObjectSystem
 
   def to_h
     {
+      id: object_id,
       type: type
     }
   end
@@ -42,6 +33,6 @@ class GameObject
   end
 
   def attributes
-    self.class.dry_initializer.attributes(self).reject { |k, _| %i[world].include?(k) }
+    self.class.dry_initializer.attributes(self)
   end
 end

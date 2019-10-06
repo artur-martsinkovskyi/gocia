@@ -41,13 +41,6 @@ module Slates
       contents
     end
 
-    def self.to_content(obj)
-      return obj unless obj.is_a?(Array)
-
-      klass, object_id = obj
-      klass.object_pool[object_id]
-    end
-
     private
 
     attr_reader :contents

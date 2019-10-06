@@ -2,18 +2,15 @@
 
 module Controls
   module Commands
-    class MoveMapCommand
-      attr_reader :map
+    class MoveMapCommand < Command
+      attribute :map, Types.Instance(Map)
+
       DIRECTIONS = {
         Gosu::KB_A => :left,
         Gosu::KB_D => :right,
         Gosu::KB_W => :up,
         Gosu::KB_S => :down
       }.freeze
-
-      def initialize(map)
-        @map = map
-      end
 
       def call(id)
         map.move(DIRECTIONS[id])

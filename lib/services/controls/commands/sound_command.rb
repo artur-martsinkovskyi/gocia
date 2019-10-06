@@ -2,12 +2,8 @@
 
 module Controls
   module Commands
-    class SoundCommand
-      attr_reader :engine
-
-      def initialize(engine)
-        @engine = engine
-      end
+    class SoundCommand < Command
+      attribute :engine, Types.Instance(SoundEngine)
 
       def call
         if engine.song.playing?

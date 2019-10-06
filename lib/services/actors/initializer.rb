@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module Actors
-  class Initializer
-    def initialize(world)
-      @world = world
-    end
+  class Initializer < Operation
+    attribute :world, Types.Instance(World)
 
     def call
       placements = Array.new(
@@ -13,13 +11,8 @@ module Actors
 
       placements.map do |x, y|
         slate = world.slates[x][y]
-        actor = Actor.new(slate_id: slate.object_id)
-        actor
+        Actor.new(slate_id: slate.object_id)
       end
     end
-
-    private
-
-    attr_reader :world
   end
 end

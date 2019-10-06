@@ -15,8 +15,8 @@ module Ai
         tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
 
         fruit = tree.fruit
-        tree.update { |fruitful_tree| fruitful_tree.fruit_id = nil }
-        ConsumeFoodCommand.new(actor, food: fruit).call
+        tree.update { |fruitful_tree| fruitful_tree.fruit = nil }
+        ConsumeFoodCommand.new(actor, metadata.merge(food: fruit)).call
       end
 
       private

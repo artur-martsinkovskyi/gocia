@@ -3,7 +3,7 @@
 require 'perlin'
 
 module Terrain
-  class HeightmapGenerator < Service
+  class HeightmapGenerator < Operation
     attribute :width, Types::Integer
     attribute :height, Types::Integer
     attribute(:noise_seed, Types::Integer.default { 10 })

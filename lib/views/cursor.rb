@@ -2,8 +2,10 @@
 
 class Cursor
   include Dimensions
-  attr_reader :position
+
   COLOR = 0x70ffffff
+
+  attr_reader :position, :pointer
 
   def initialize
     @pointer = Gosu::Image.new(
@@ -21,8 +23,8 @@ class Cursor
   end
 
   def draw
-    @pointer.draw(
-      *@position.absolute_position,
+    pointer.draw(
+      *position.absolute_position,
       1,
       1,
       1,
@@ -31,14 +33,14 @@ class Cursor
   end
 
   def move(direction)
-    @position.send(direction)
+    position.send(direction)
   end
 
   def move_to(x, y)
-    @position.absolute_position = [x, y]
+    position.absolute_position = [x, y]
   end
 
   def relative_position
-    @position.relative_position
+    position.relative_position
   end
 end

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module Terrain
-  class SlateMapGenerator < Service
-    attribute :world, Types.Instance(World)
+  class SlateMapGenerator < Operation
     attribute :width, Types::Integer
     attribute :height, Types::Integer
 

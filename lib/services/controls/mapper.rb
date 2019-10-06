@@ -2,18 +2,16 @@
 
 module Controls
   class Mapper
-    attr_reader :context
+    extend Dry::Initializer
+    extend Memoist
+    param :context, Types.Instance(Window)
 
-    def initialize(context)
-      @context = context
+    memoize def button_up
+      ButtonUpMapper.new(context)
     end
 
-    def button_up
-      @button_up ||= ButtonUpMapper.new(context)
-    end
-
-    def button_down
-      @button_down ||= ButtonDownMapper.new(context)
+    memoize def button_down
+      ButtonDownMapper.new(context)
     end
   end
 end

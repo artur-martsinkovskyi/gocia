@@ -154,6 +154,7 @@ describe Slate do
       expect(slate.to_h).to match(
         x: 1,
         y: 1,
+        id: slate.object_id,
         height: 0.0,
         moist: 0.0,
         contents: [],

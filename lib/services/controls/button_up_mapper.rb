@@ -2,11 +2,8 @@
 
 module Controls
   class ButtonUpMapper
-    attr_reader :context
-
-    def initialize(context)
-      @context = context
-    end
+    extend Dry::Initializer
+    param :context, Types.Instance(Window)
 
     def trigger(signal:)
       case signal
@@ -20,11 +17,11 @@ module Controls
     private
 
     def move_cursor_command
-      @move_cursor_command ||= Commands::MoveCursorCommand.new(context.cursor)
+      @move_cursor_command ||= Commands::MoveCursorCommand.new(cursor: context.cursor)
     end
 
     def move_map_command
-      @move_map_command ||= Commands::MoveMapCommand.new(context.map)
+      @move_map_command ||= Commands::MoveMapCommand.new(map: context.map)
     end
   end
 end

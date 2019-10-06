@@ -2,11 +2,8 @@
 
 module Controls
   class ButtonDownMapper
-    attr_reader :context
-
-    def initialize(context)
-      @context = context
-    end
+    extend Dry::Initializer
+    param :context, Types.Instance(Window)
 
     def trigger(signal:)
       case signal
@@ -25,15 +22,15 @@ module Controls
     private
 
     def sound_command
-      @sound_command ||= Commands::SoundCommand.new(context.sound_engine)
+      @sound_command ||= Commands::SoundCommand.new(engine: context.sound_engine)
     end
 
     def close_window_command
-      @close_window_command ||= Commands::CloseWindowCommand.new(context)
+      @close_window_command ||= Commands::CloseWindowCommand.new(window: context)
     end
 
     def mouse_move_cursor_command
-      @mouse_move_cursor_command ||= Commands::MouseMoveCursorCommand.new(context.cursor)
+      @mouse_move_cursor_command ||= Commands::MouseMoveCursorCommand.new(cursor: context.cursor)
     end
   end
 end

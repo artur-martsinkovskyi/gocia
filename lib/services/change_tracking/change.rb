@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-require 'dry-initializer'
-require 'dry-types'
+require 'dry-struct'
 
 module ChangeTracking
-  class Change
-    extend Dry::Initializer
-
+  class Change < Dry::Struct
     ADD = '+'
     REMOVE = '-'
     ALTER = '~'
@@ -17,10 +14,10 @@ module ChangeTracking
       REMOVE
     ].freeze
 
-    option :change_type, Types::String.enum(*CHANGE_TYPES)
-    option :field, Types::String
-    option :from, Types::Any
-    option :to, Types::Any
+    attribute :change_type, Types::String.enum(*CHANGE_TYPES)
+    attribute :field, Types::String
+    attribute :from, Types::Any
+    attribute :to, Types::Any
 
     def object_path
       if field.include?('.')

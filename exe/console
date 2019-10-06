@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'bundler/setup'
 require 'gosu'
-require 'dry-initializer'
-require 'memoist'
 require 'pry'
 require 'zeitwerk'
 
 loader = Zeitwerk::Loader.new
+loader.enable_reloading
 loader.push_dir('lib')
 loader.push_dir('lib/constants')
 loader.push_dir('lib/engines')
@@ -17,6 +17,13 @@ loader.push_dir('lib/views')
 loader.push_dir('lib/rules')
 loader.push_dir('lib/objects')
 loader.setup
-loader.eager_load
 
-Window.new.show
+# You can add fixtures and/or initialization code here to make experimenting
+# with your gem easier. You can also use a different console, if you like.
+
+# (If you use this, don't forget to add pry to your Gemfile!)
+# require "pry"
+# Pry.start
+
+require 'irb'
+IRB.start(__FILE__)

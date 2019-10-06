@@ -8,7 +8,7 @@ module Ai
       @emitter = emitter
     end
 
-    def step
+    def build
       if !actor.stats.alive
         Commands::EmptyCommand.new(actor, metadata)
       elsif actor.stats.health.value == actor.stats.health.lower_bound

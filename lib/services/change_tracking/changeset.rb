@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'dry-struct'
-require 'dry-types'
 
 module ChangeTracking
   class Changeset < Dry::Struct

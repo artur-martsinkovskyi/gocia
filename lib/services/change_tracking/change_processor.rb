@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ChangeTracking
-  class ChangeProcessor < ::Service
+  class ChangeProcessor < Operation
     attribute :object, Types::Any
     attribute :change, Types::Instance(Change)
     attribute :direction, Types::Symbol.enum(:rollup, :rollback)
@@ -11,6 +11,8 @@ module ChangeTracking
       when Change::ALTER then alter
       when Change::ADD then add
       when Change::REMOVE then remove
+      else
+        raise ArgumentError, "Unknown change type #{change.change_type}"
       end
     end
 
@@ -28,22 +30,28 @@ module ChangeTracking
 
     def add
       if direction == :rollback
-        receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('delete', to_object_form(change.from))
+        remove_from_array
       elsif direction == :rollup
-        receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('push', to_object_form(change.from))
+        add_to_array
       end
     end
 
     def remove
       if direction == :rollback
-        receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('push', to_object_form(change.from))
+        add_to_array
       elsif direction == :rollup
-        receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('delete', to_object_form(change.from))
+        remove_from_array
       end
+    end
+
+    def add_to_array
+      receiver = object.instance_eval(change.object_path + ".#{array_path}")
+      receiver.send('push', to_object_form(change.from))
+    end
+
+    def remove_from_array
+      receiver = object.instance_eval(change.object_path + ".#{array_path}")
+      receiver.send('delete', to_object_form(change.from))
     end
 
     def to_object_form(obj)

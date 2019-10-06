@@ -8,7 +8,7 @@ module ViewObjects
 
     def draw
       draw_base
-      draw_fruit if tree.fruit
+      draw_fruit
     end
 
     private
@@ -24,7 +24,7 @@ module ViewObjects
     end
 
     def draw_fruit
-      Fruit.new(x: x, y: y, fruit: tree.fruit).draw
+      Fruit.new(x: x, y: y, fruit: tree.fruit).draw if tree.fruit
     end
   end
 end

@@ -2,12 +2,8 @@
 
 module Controls
   module Commands
-    class CloseWindowCommand
-      attr_reader :window
-
-      def initialize(window)
-        @window = window
-      end
+    class CloseWindowCommand < Command
+      attribute :window, Types::Instance(Window)
 
       def call
         window.close

@@ -6,17 +6,17 @@ class Slate < GameObject
   option :height, Types::Coercible::Float, default: proc { 0 }
   option :moist, Types::Coercible::Float, default: proc { 0 }
 
-  memoize def biome
-    Terrain::BiomePicker.call(height, moist)
-  end
-
-  def surrounding_slates(distance = 1)
+  memoize def surrounding_slates(distance = 1)
     left_limit = [0, x - distance].max
     top_limit  = [0, y - distance].max
 
     $world.slates[left_limit..(x + distance)].map do |r|
       r[top_limit..(y + distance)]
     end.flatten
+  end
+
+  memoize def biome
+    Terrain::BiomePicker.call(height, moist)
   end
 
   memoize def contents

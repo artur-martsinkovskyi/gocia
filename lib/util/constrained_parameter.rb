@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'dry-initializer'
-
 class ConstrainedParameter
   extend Dry::Initializer
 
   option :lower_bound, Types::Integer
   option :upper_bound, Types::Integer
   option :value, Types::Integer
+
+  attr_writer :value
 
   def inc(by = 1)
     self.value = [value + by, upper_bound].min
@@ -24,6 +24,4 @@ class ConstrainedParameter
 
     self.value = value
   end
-
-  attr_writer :value
 end

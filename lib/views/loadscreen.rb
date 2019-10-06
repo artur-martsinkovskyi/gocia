@@ -7,6 +7,8 @@ class Loadscreen
   include Fonts
   include Images
 
+  attr_reader :title, :image
+
   def initialize
     @title = Gosu::Image.from_text(
       '
@@ -17,12 +19,12 @@ by ARTUR MARTSINKOVSKYI
       font: AMATIC_REGULAR
     )
     @image = Gosu::Image.new(HEXAGON)
-    @angle = 0
+    @rotator = Rotator.call(angle: 25)
   end
 
   def draw
-    @title.draw(145, 20, 0, 0.5, 0.5, Gosu::Color::WHITE)
-    @image.draw_rot(400, 240, 0, angle, 0.5, 0.5, 0.2, 0.2, Gosu::Color::WHITE)
+    title.draw(145, 20, 0, 0.5, 0.5, Gosu::Color::WHITE)
+    image.draw_rot(400, 240, 0, rotator.next, 0.5, 0.5, 0.2, 0.2, Gosu::Color::WHITE)
     Gosu.draw_rect(
       0,
       HEIGHT - 200,
@@ -37,7 +39,7 @@ by ARTUR MARTSINKOVSKYI
     ).draw(0, HEIGHT - 200, 0, 1, 1, Gosu::Color::BLACK)
   end
 
-  def angle
-    @angle = (@angle + 25) % 360
-  end
+  private
+
+  attr_reader :rotator
 end
