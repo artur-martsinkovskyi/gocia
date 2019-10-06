@@ -25,13 +25,16 @@ require 'memoist'
 require 'simplecov'
 
 SimpleCov.start do
-  add_group 'Constants', 'lib/constants'
   add_group 'Engines', 'lib/engines'
   add_group 'Objects', 'lib/objects'
   add_group 'Rules', 'lib/rules'
   add_group 'Services', 'lib/services'
   add_group 'Util', 'lib/util'
   add_group 'Views', 'lib/views'
+  add_filter 'spec'
+  add_filter 'exe'
+  add_filter 'lib/constants'
+  add_filter 'lib/gocia.rb'
 end
 
 loader = Zeitwerk::Loader.new

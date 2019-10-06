@@ -10,11 +10,11 @@ class ConstrainedParameter
   attr_writer :value
 
   def inc(by = 1)
-    self.value = [value + by, upper_bound].min
+    self.value = [value + by.abs, upper_bound].min
   end
 
   def dec(by = 1)
-    self.value = [value - by, lower_bound].max
+    self.value = [value - by.abs, lower_bound].max
   end
 
   def set(value)

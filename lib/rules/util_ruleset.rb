@@ -5,6 +5,8 @@ module UtilRuleset
   Failure = :failure?.to_proc
   Pipe = :itself.to_proc
 
+  module_function
+
   def satisfies?(rule)
     Pipe >> rule >> Success
   end

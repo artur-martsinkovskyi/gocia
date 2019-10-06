@@ -2,7 +2,7 @@
 
 module Ai
   module Commands
-    class EmptyCommand
+    class EmptyCommand < Command
       def call; end
     end
   end
