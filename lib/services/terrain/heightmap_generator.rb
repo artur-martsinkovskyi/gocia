@@ -14,7 +14,7 @@ module Terrain
           nx = 5 * (x.to_f / width - 0.5)
           ny = 5 * (y.to_f / height - 0.5)
           e = e_value(octaves: 3, nx: nx, ny: ny)
-          Math.cos(e) ** 5
+          Math.cos(e)**5
         end
       end
     end
@@ -32,7 +32,6 @@ module Terrain
         noise_stretch **= 3
       end
 
-
       e / division_factor
     end
 
@@ -44,7 +43,7 @@ module Terrain
       nnx = (nx / 6)
       nny = (ny / 6)
 
-      d =  2.4 * Math.sqrt(nnx * nnx + nny * nny)
+      d = 2.4 * Math.sqrt(nnx * nnx + nny * nny)
       e = e + 0.1 - d**9
       e = e > 1 ? 1 : e
       e.negative? ? 0 : e

@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
 describe Slate do
-  subject(:slate) { described_class.new(world: world, x: 1, y: 1) }
+  subject(:slate) { described_class.new(x: 1, y: 1) }
 
-  let(:world) do
-    double(
-      'World',
-      slates: double
-    )
+  before do
+    $world = spy
+  end
+
+  after do
+    $world = nil
+  end
+
+  before do
+    allow($world).to receive(:slates).and_return(double)
   end
 
   describe '.new' do
@@ -16,7 +21,7 @@ describe Slate do
     end
 
     context 'when height and moist are given' do
-      subject(:slate) { described_class.new(world: world, x: 1, y: 1, height: height, moist: moist) }
+      subject(:slate) { described_class.new(x: 1, y: 1, height: height, moist: moist) }
 
       let(:height) { 12 }
       let(:moist)  { 12 }
@@ -45,7 +50,7 @@ describe Slate do
 
       context 'when slate is not the high point' do
         before do
-          allow(world).to receive(:slates).and_return(double("[]": []))
+          allow($world).to receive(:slates).and_return(double("[]": []))
         end
 
         it 'does not have a tree in the content' do
@@ -55,7 +60,7 @@ describe Slate do
 
       context 'when slate is a high point' do
         before do
-          allow(world).to receive(:slates).and_return(double("[]": [double('[]': slate)]))
+          allow($world).to receive(:slates).and_return(double("[]": [double('[]': slate)]))
         end
 
         it 'does not have a tree in the content' do
@@ -66,7 +71,7 @@ describe Slate do
   end
 
   describe '#biome' do
-    subject(:slate) { described_class.new(world: world, x: 1, y: 1, height: height, moist: moist) }
+    subject(:slate) { described_class.new(x: 1, y: 1, height: height, moist: moist) }
 
     let(:height) { 100 }
     let(:moist)  { 14 }
@@ -83,14 +88,14 @@ describe Slate do
   end
 
   describe '#surrounding_slates' do
-    subject(:slate) { described_class.new(world: world, x: x, y: y) }
+    subject(:slate) { described_class.new(x: x, y: y) }
 
     let(:slates) do
       (1..25).each_slice(5).map(&:itself).tap { |a| p a }
     end
 
-    let(:world) do
-      double('World', slates: slates)
+    before do
+      allow($world).to receive(:slates).and_return(slates)
     end
 
     before do

@@ -37,9 +37,9 @@ describe ChangeTracker do
 
   describe '#update' do
     subject do
-      tracked_dummy.update do
-        self.name = 'Ford'
-        self.id = 85
+      tracked_dummy.update do |tracked_dummy|
+        tracked_dummy.name = 'Ford'
+        tracked_dummy.id = 85
       end
     end
 
@@ -52,10 +52,10 @@ describe ChangeTracker do
     before do
       tracked_dummy.tick = 2
       tracked_dummy.update do
-        self.name = 'Ford'
-        self.id = 85
-        inner.id = 5
-        inner.ids << tracked_dummy
+        tracked_dummy.name = 'Ford'
+        tracked_dummy.id = 85
+        tracked_dummy.inner.id = 5
+        tracked_dummy.inner.ids << tracked_dummy
       end
     end
 
@@ -75,11 +75,11 @@ describe ChangeTracker do
 
     before do
       tracked_dummy.tick = 2
-      tracked_dummy.update do
-        self.name = 'Ford'
-        self.id = 85
-        inner.id = 5
-        inner.ids << tracked_dummy
+      tracked_dummy.update do |tracked_dummy|
+        tracked_dummy.name = 'Ford'
+        tracked_dummy.id = 85
+        tracked_dummy.inner.id = 5
+        tracked_dummy.inner.ids << tracked_dummy
       end
       tracked_dummy.rollback(to: 1)
     end
@@ -88,10 +88,10 @@ describe ChangeTracker do
 
     it 'rolls up inner object' do
       expect(tracked_dummy.inner.id).to eq(12)
-      expect(tracked_dummy.inner.ids).not_to include([tracked_dummy.class, tracked_dummy.object_id])
+      expect(tracked_dummy.inner.ids).not_to include(tracked_dummy)
       subject
       expect(tracked_dummy.inner.id).to eq(5)
-      expect(tracked_dummy.inner.ids).to include([tracked_dummy.class, tracked_dummy.object_id])
+      expect(tracked_dummy.inner.ids).to include(tracked_dummy.class)
     end
   end
 end

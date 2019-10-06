@@ -29,21 +29,28 @@ module ChangeTracking
     def add
       if direction == :rollback
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('delete', Slates::Contents.to_content(change.from))
+        receiver.send('delete', to_object_form(change.from))
       elsif direction == :rollup
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('push', Slates::Contents.to_content(change.from))
+        receiver.send('push', to_object_form(change.from))
       end
     end
 
     def remove
       if direction == :rollback
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('push', Slates::Contents.to_content(change.from))
+        receiver.send('push', to_object_form(change.from))
       elsif direction == :rollup
         receiver = object.instance_eval(change.object_path + ".#{array_path}")
-        receiver.send('delete', Slates::Contents.to_content(change.from))
+        receiver.send('delete', to_object_form(change.from))
       end
+    end
+
+    def to_object_form(obj)
+      return obj unless obj.is_a?(Array)
+
+      klass, object_id = obj
+      klass.object_pool[object_id]
     end
 
     def array_path
