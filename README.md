@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/artur-martsinkovskyi/gocia.svg?branch=master)](https://travis-ci.com/artur-martsinkovskyi/gocia)
+
 # gocia
 This project is a practical part of Master's thesis research in world generation and social simulation. It involves procedural generation, combinatorics and a lot of specific algorithms in order to reach sufficient levels of plausibility in simulation of landscape, water, people, objects and institutions.
 
