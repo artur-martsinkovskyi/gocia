@@ -37,9 +37,9 @@ describe ChangeTracker do
 
   describe '#update' do
     subject do
-      tracked_dummy.update do |dummy|
-        dummy.name = 'Ford'
-        dummy.id = 85
+      tracked_dummy.update do
+        self.name = 'Ford'
+        self.id = 85
       end
     end
 
@@ -51,11 +51,11 @@ describe ChangeTracker do
 
     before do
       tracked_dummy.tick = 2
-      tracked_dummy.update do |dummy|
-        dummy.name = 'Ford'
-        dummy.id = 85
-        dummy.inner.id = 5
-        dummy.inner.ids << tracked_dummy
+      tracked_dummy.update do
+        self.name = 'Ford'
+        self.id = 85
+        inner.id = 5
+        inner.ids << tracked_dummy
       end
     end
 
@@ -75,11 +75,11 @@ describe ChangeTracker do
 
     before do
       tracked_dummy.tick = 2
-      tracked_dummy.update do |dummy|
-        dummy.name = 'Ford'
-        dummy.id = 85
-        dummy.inner.id = 5
-        dummy.inner.ids << tracked_dummy
+      tracked_dummy.update do
+        self.name = 'Ford'
+        self.id = 85
+        inner.id = 5
+        inner.ids << tracked_dummy
       end
       tracked_dummy.rollback(to: 1)
     end

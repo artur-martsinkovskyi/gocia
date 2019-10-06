@@ -7,9 +7,9 @@ module ChangeTracking
   class Change
     extend Dry::Initializer
 
-    ADD = "+"
-    REMOVE = "-"
-    ALTER = "~"
+    ADD = '+'
+    REMOVE = '-'
+    ALTER = '~'
 
     CHANGE_TYPES = [
       ADD,
@@ -24,7 +24,7 @@ module ChangeTracking
 
     def object_path
       if field.include?('.')
-        field.split('.')[..-2].join(".")
+        field.split('.')[..-2].join('.')
       else
         'self'
       end

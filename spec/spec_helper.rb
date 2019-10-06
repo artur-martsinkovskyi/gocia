@@ -25,17 +25,16 @@ require 'simplecov'
 SimpleCov.start
 
 loader = Zeitwerk::Loader.new
-loader.push_dir("lib")
-loader.push_dir("lib/constants")
-loader.push_dir("lib/engines")
-loader.push_dir("lib/services")
-loader.push_dir("lib/util")
-loader.push_dir("lib/views")
-loader.push_dir("lib/rules")
-loader.push_dir("lib/objects")
+loader.push_dir('lib')
+loader.push_dir('lib/constants')
+loader.push_dir('lib/engines')
+loader.push_dir('lib/services')
+loader.push_dir('lib/util')
+loader.push_dir('lib/views')
+loader.push_dir('lib/rules')
+loader.push_dir('lib/objects')
 loader.setup
 loader.eager_load
-
 
 require 'rspec-parameterized'
 

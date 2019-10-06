@@ -2,13 +2,9 @@
 
 module ChangeTracking
   class ChangeProcessor < ::Service
-    attr_reader :object, :change, :direction
-
-    def initialize(object, change, direction:)
-      @object = object
-      @change = change
-      @direction = direction
-    end
+    attribute :object, Types::Any
+    attribute :change, Types::Instance(Change)
+    attribute :direction, Types::Symbol.enum(:rollup, :rollback)
 
     def call
       case change.change_type

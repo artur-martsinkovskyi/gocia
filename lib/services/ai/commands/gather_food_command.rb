@@ -2,15 +2,8 @@
 
 module Ai
   module Commands
-    class GatherFoodCommand
-      attr_reader :actor, :metadata
-
+    class GatherFoodCommand < Command
       include SlatesRuleset
-
-      def initialize(actor, metadata = {})
-        @actor = actor
-        @metadata = metadata
-      end
 
       def call
         food_slate = surrounding_slates.find do |slate|
@@ -19,24 +12,11 @@ module Ai
 
         return unless food_slate
 
-        food_slate.update do |food_slate|
-          @tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
+        tree = food_slate.contents.find(&satisfies?(IsTreeWithFruit))
 
-          @fruit = @tree.fruit
-          @tree.fruit_id = nil
-        end
-        @command = ConsumeFoodCommand.new(@actor, food: @fruit)
-        @command.call
-      end
-
-      def redo
-        call
-      end
-
-      def undo
-        return unless @tree
-
-        @command.undo
+        fruit = tree.fruit
+        tree.update { |fruitful_tree| fruitful_tree.fruit_id = nil }
+        ConsumeFoodCommand.new(actor, food: fruit).call
       end
 
       private

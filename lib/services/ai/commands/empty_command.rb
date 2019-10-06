@@ -11,12 +11,6 @@ module Ai
       end
 
       def call; end
-
-      def redo
-        call
-      end
-
-      def undo; end
     end
   end
 end

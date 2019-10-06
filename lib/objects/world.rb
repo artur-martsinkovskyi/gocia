@@ -19,8 +19,9 @@ class World
       actors.each(&:step)
     else
       @rollbacked_tick = nil if @rollbacked_tick == @tick
-      Actor.object_pool.each_value { |actor| actor.rollup(to: @tick) }
-      Slate.object_pool.each_value { |slate| slate.rollup(to: @tick) }
+      [Actor, Slate, Tree].each do |object_class|
+        object_class.object_pool.each_value { |object| object.rollup(to: @tick) }
+      end
     end
     @tick += 1
   end
@@ -30,7 +31,8 @@ class World
 
     @rollbacked_tick ||= @tick
     @tick -= 1
-    Actor.object_pool.each_value { |actor| actor.rollback(to: @tick) }
-    Slate.object_pool.each_value { |slate| slate.rollback(to: @tick) }
+    [Actor, Slate, Tree].each do |object_class|
+      object_class.object_pool.each_value { |object| object.rollback(to: @tick) }
+    end
   end
 end

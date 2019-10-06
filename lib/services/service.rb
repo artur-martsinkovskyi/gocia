@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
-class Service
-  private_class_method :new
+require 'dry-struct'
+require 'memoist'
 
-  def self.call(*attributes)
-    new(*attributes).send(:call)
+class Service < Dry::Struct
+  extend Memoist
+
+  def self.call(*args)
+    attributes = args.last.is_a?(Hash) ? args.pop : {}
+    names = schema.keys.map(&:name)
+    args.each_with_index do |value, index|
+      attributes[names[index]] = value
+    end
+    new(attributes).call
   end
 end

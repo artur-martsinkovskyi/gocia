@@ -18,13 +18,6 @@ module Ai
         @next_slate.update { |to| to.contents.push(actor) }
       end
 
-      def redo
-        call
-      end
-
-      def undo
-      end
-
       private
 
       def pick_slate

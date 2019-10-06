@@ -24,11 +24,11 @@ module Ai
     end
 
     def emit
-      if command_items.empty? || command_items.last.tick < current_tick
-        command = command_builder.step
-        command_items.push(CommandItem.new(tick: current_tick, command: command))
-        command.call
-      end
+      return unless command_items.empty? || command_items.last.tick < current_tick
+
+      command = command_builder.step
+      command_items.push(CommandItem.new(tick: current_tick, command: command))
+      command.call
     end
 
     private

@@ -8,13 +8,6 @@ module Ai
           actor.stats.alive = false
         end
       end
-
-      def redo
-        call
-      end
-
-      def undo
-      end
     end
   end
 end

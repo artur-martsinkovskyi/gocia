@@ -9,10 +9,6 @@ module Ai
         @actor = actor
         @metadata = metadata
       end
-
-      def redo
-        call
-      end
     end
   end
 end

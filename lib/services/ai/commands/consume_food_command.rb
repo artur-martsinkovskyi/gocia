@@ -4,12 +4,10 @@ module Ai
   module Commands
     class ConsumeFoodCommand < Command
       def call
-        @food = metadata.delete(:food)
-        @previous_hunger = actor.stats.hunger.value
-        @previous_health = actor.stats.health.value
+        food = metadata[:food]
 
         actor.update do |actor|
-          if @food.poisonous?
+          if food.poisonous?
             actor.stats.hunger.inc
             actor.stats.health.dec(2)
           else
@@ -17,10 +15,6 @@ module Ai
             actor.stats.health.inc(2)
           end
         end
-      end
-
-      def undo
-        metadata[:food] = @food
       end
     end
   end

@@ -2,13 +2,9 @@
 
 module Terrain
   class SlateMapGenerator < Service
-    attr_reader :width, :height
-
-    def initialize(world, width, height)
-      @world  = world
-      @width  = width
-      @height = height
-    end
+    attribute :world, Types.Instance(World)
+    attribute :width, Types::Integer
+    attribute :height, Types::Integer
 
     def call
       heights.map.with_index do |row, i|
@@ -25,12 +21,12 @@ module Terrain
 
     private
 
-    def heights
-      @heights ||= Terrain::HeightmapGenerator.call(width, height)
+    memoize def heights
+      Terrain::HeightmapGenerator.call(width, height)
     end
 
-    def moists
-      @moists ||= Terrain::HeightmapGenerator.call(width, height, 300)
+    memoize def moists
+      Terrain::HeightmapGenerator.call(width, height, 300)
     end
   end
 end

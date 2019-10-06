@@ -2,7 +2,7 @@
 
 require 'concurrent'
 
-class Initializer
+class Initializer < Service
   def ready?
     if initialization.fulfilled?
       true
@@ -13,7 +13,7 @@ class Initializer
     end
   end
 
-  def initialization
+  memoize def initialization
     @initialization ||= begin
                           Concurrent::Promises.future do
                             WorldEngine.new
@@ -21,7 +21,7 @@ class Initializer
                         end
   end
 
-  def world_engine
-    @world_engine ||= initialization.value
+  memoize def world_engine
+    initialization.value
   end
 end

@@ -23,17 +23,9 @@ module ChangeTracking
       return object unless change_attributes.any?
 
       changes = change_attributes.map do |change_type, field, from, to|
-        Change.new(
-          change_type: change_type,
-          field: field,
-          from: from,
-          to: to
-        )
+        Change.new(change_type: change_type, field: field, from: from, to: to)
       end
-      changesets << Changeset.new(
-        tick: object.tick,
-        changes: changes
-      )
+      changesets << Changeset.new(tick: object.tick, changes: changes)
       self.current_change_tick = object.tick
       object
     end

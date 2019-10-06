@@ -12,14 +12,6 @@ module Ai
       def call
         commands.each(&:call)
       end
-
-      def redo
-        call
-      end
-
-      def undo
-        commands.each(&:undo)
-      end
     end
   end
 end

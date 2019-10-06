@@ -13,6 +13,9 @@ Naming/UncommunicativeMethodParamName:
 Naming/ConstantName:
   Enabled: false
 
+Style/GlobalVars:
+  Enabled: false
+
 Metrics/MethodLength:
   Max: 20
 
