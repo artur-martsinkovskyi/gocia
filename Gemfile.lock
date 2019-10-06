@@ -66,6 +66,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     rainbow (3.0.0)
+    rake (13.0.0)
     rmagick (3.2.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
@@ -128,6 +129,7 @@ DEPENDENCIES
   memoist
   perlin
   pry
+  rake
   rmagick
   rspec
   rspec-parameterized
