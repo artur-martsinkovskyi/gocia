@@ -31,9 +31,3 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 10
 
-RSpec/VerifiedDoubles:
-  Enabled: false
-RSpec/ExampleLength:
-  Max: 10
-RSpec/NestedGroups:
-  Max: 4
