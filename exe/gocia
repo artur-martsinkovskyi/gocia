@@ -8,7 +8,7 @@ require 'pry'
 require 'zeitwerk'
 
 loader = Zeitwerk::Loader.new
-loader.push_dir('lib')
+loader.push_dir('config')
 loader.push_dir('lib/constants')
 loader.push_dir('lib/engines')
 loader.push_dir('lib/services')

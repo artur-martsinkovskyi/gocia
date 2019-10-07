@@ -34,11 +34,11 @@ SimpleCov.start do
   add_filter 'spec'
   add_filter 'exe'
   add_filter 'lib/constants'
-  add_filter 'lib/gocia.rb'
+  add_filter 'config'
 end
 
 loader = Zeitwerk::Loader.new
-loader.push_dir('lib')
+loader.push_dir('config')
 loader.push_dir('lib/constants')
 loader.push_dir('lib/engines')
 loader.push_dir('lib/services')
