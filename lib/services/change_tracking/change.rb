@@ -21,7 +21,7 @@ module ChangeTracking
 
     def object_path
       if field.include?('.')
-        field.split('.')[..-2].join('.')
+        field.split('.')[0..-2].join('.')
       else
         'self'
       end
