@@ -14,7 +14,7 @@ module Gocia
     def config
       @config ||= YAML.safe_load(
         File.read(
-          root.join('config', 'base.yml')
+          root.join('config', $config_path || 'base.yml')
         )
       ).to_frozen_ostruct
     end

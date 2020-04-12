@@ -6,15 +6,20 @@ module Terrain
   class HeightmapGenerator < Operation
     attribute :width, Types::Integer
     attribute :height, Types::Integer
-    attribute(:noise_seed, Types::Integer.default { 10 })
+    attribute(:noise_seed, Types::Integer.default { Gocia.config.world.seed })
 
     def call
       Array.new(width) do |y|
         Array.new(height) do |x|
           nx = 5 * (x.to_f / width - 0.5)
           ny = 5 * (y.to_f / height - 0.5)
-          e = e_value(octaves: 3, nx: nx, ny: ny)
-          Math.cos(e)**5
+          e = e_value(octaves: Gocia.config.world.octaves, nx: nx, ny: ny)
+          e = Math.cos(e)**6
+          if Gocia.config.world.island
+            island_normalize(e, nx, ny)
+          else
+            e
+          end
         end
       end
     end

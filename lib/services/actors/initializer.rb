@@ -6,8 +6,13 @@ module Actors
 
     def call
       placements = Array.new(
-        Gocia.config.world.actor_count
-      ) { [0, 34] }
+        Gocia.config.world.actors.count
+      ) do
+        [
+          Gocia.config.world.actors.starting_point.x,
+          Gocia.config.world.actors.starting_point.y,
+        ]
+      end
 
       placements.map do |x, y|
         slate = world.slates[x][y]

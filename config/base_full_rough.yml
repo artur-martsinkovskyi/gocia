@@ -1,7 +1,7 @@
 interface:
   map_size: 1024
   sidebar_width: 400
-  viewport_size: 64
+  viewport_size: 256
   starting_point:
     x: 0
     y: 0
@@ -13,5 +13,5 @@ world:
       x: 35
       y: 35
   island: false
-  octaves: 3
+  octaves: 5
   seed: 10

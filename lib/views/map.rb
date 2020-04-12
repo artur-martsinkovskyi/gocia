@@ -5,8 +5,8 @@ class Map
   attr_reader :current_map_x_offset, :current_map_y_offset
 
   def initialize(window)
-    @current_map_x_offset = 0
-    @current_map_y_offset = 0
+    @current_map_x_offset = Gocia.config.interface.starting_point.x
+    @current_map_y_offset = Gocia.config.interface.starting_point.y
     @map_changed = true
     @window = window
   end

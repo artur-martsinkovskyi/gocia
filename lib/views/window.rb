@@ -14,7 +14,7 @@ class Window < Gosu::Window
     super WIDTH, HEIGHT
     self.caption = Gocia::APPLICATION_NAME
     @sidebar = Sidebar.new(self)
-    @map = Map.new(self)
+    @map    = Map.new(self)
     @cursor = Cursor.new
     @sound_engine = SoundEngine.new
     @controls = Controls::Mapper.new(self)

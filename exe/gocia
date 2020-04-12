@@ -7,6 +7,7 @@ require 'memoist'
 require 'pry'
 require 'zeitwerk'
 
+$config_path = ARGV[0] if ARGV.any?
 loader = Zeitwerk::Loader.new
 loader.push_dir('config')
 loader.push_dir('lib/constants')

@@ -18,7 +18,9 @@ module Ai
       private
 
       memoize def pick_slate
-        slates = actor.slate.surrounding_slates
+        slates = actor.slate.surrounding_slates.select do |slate|
+          slate.biome.land?
+        end
 
         if metadata[:direction]
           next_slate = slates[metadata[:direction]]
