@@ -10,7 +10,7 @@ module Actors
       ) do
         [
           Gocia.config.world.actors.starting_point.x,
-          Gocia.config.world.actors.starting_point.y,
+          Gocia.config.world.actors.starting_point.y
         ]
       end
 
